@@ -5,6 +5,7 @@ let allPlaces = [];
 
 // 🔥 API CALL
 fetch(`http://localhost:5000/places?t=${Date.now()}`)
+fetch("https://travelbharatbackend.onrender.com/places")
     .then(res => {
         if (!res.ok) throw new Error("Failed to fetch places");
         return res.json();
