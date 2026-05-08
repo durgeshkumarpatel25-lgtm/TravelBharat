@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Regions | TravelBharat Elite</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .regional-hero {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
+                        url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=2071');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            border-radius: 0 0 60px 60px;
+            margin-bottom: -60px;
+        }
+        .regional-hero h2 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            color: white;
+            letter-spacing: -2px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar scrolled">
+    <h1 class="logo">Travel<b>Bharat</b></h1>
+    <ul class="nav-links">
+        <li><a href="index.html#hero">Home</a></li>
+        <li><a href="index.html#states">States</a></li>
+        <li><a href="index.html#destinations">Explore</a></li>
+        <li><a href="index.html#about">About</a></li>
+    </ul>
+    <div class="nav-cta">
+        <a href="index.html" class="search-btn" style="text-decoration: none; padding: 10px 25px; font-size: 0.8rem;">Explore More</a>
+    </div>
+</header>
+
+<!-- REGIONAL HERO -->
+<section class="regional-hero reveal">
+    <div class="hero-content">
+        <span class="section-tag" style="color: rgba(255,255,255,0.8);">Elite Regional Portal</span>
+        <h2 id="stateTitle">State</h2>
+        <p id="stateDesc" style="color: rgba(255,255,255,0.9); font-weight: 500;">Journey through the unique heritage and soul of this region.</p>
+    </div>
+</section>
+
+<!-- BACK BUTTON -->
+<div class="back-container" style="position: relative; z-index: 100;">
+    <a href="index.html" class="back-btn" style="background: white; padding: 12px 25px; border-radius: 50px; box-shadow: var(--shadow-md);">
+        <span>←</span> Explore All Regions
+    </a>
+</div>
+
+<!-- PLACES GRID -->
+<section style="padding-top: 100px;">
+    <div class="grid-container" id="stateContainer">
+        <!-- Luxury Cards via state.js -->
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="main-footer" id="about">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h1 class="logo" style="color: white; margin-bottom: 1.5rem;">Travel<b>Bharat</b></h1>
+            <p>Your premier gateway to exploring the soul of India. From the snow-capped Himalayas to the tropical backwaters of Kerala, we curate the finest experiences for the modern traveler.</p>
+        </div>
+
+        <div>
+            <h4 class="footer-title">Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#states">Explore States</a></li>
+                <li><a href="index.html#destinations">Popular Places</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="footer-title">Support</h4>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Travel Advisory</a></li>
+                <li><a href="#">Contact Support</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="footer-title">Join the Journey</h4>
+            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1.5rem;">Subscribe to receive elite travel guides and hidden gem alerts.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your Email" class="newsletter-input">
+                <button type="submit" class="newsletter-btn">Join</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 TravelBharat Elite. All rights reserved. Crafted for excellence.</p>
+        <div class="social-links">
+            <a href="#">FB</a>
+            <a href="#">TW</a>
+            <a href="#">IG</a>
+            <a href="#">IN</a>
+        </div>
+    </div>
+</footer>
+
+<script src="data.js?v=2"></script>
+<script src="state.js?v=2"></script>
+<script>
+    // Initial reveal
+    setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+    }, 100);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Curator Panel | TravelBharat</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-wrapper {
+            max-width: 800px;
+            margin: 60px auto; 
+            padding: 3rem;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .lux-input {
+            width: 100%;
+            padding: 18px 25px;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 1rem;
+            background: #f8fafc;
+            transition: 0.3s;
+            outline: none;
+        }
+        .lux-input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px var(--primary-glow);
+        }
+        .lux-textarea {
+            height: 150px;
+            resize: none;
+        }
+    </style>
+</head>
+<body style="background: #f1f5f9;">
+
+<div class="admin-wrapper">
+    <div style="text-align: center; margin-bottom: 4rem;">
+        <h1 class="logo">Travel<b>Bharat</b></h1>
+        <h2 style="font-family: 'Outfit'; font-size: 2rem; margin-top: 1rem;">Destination Curator</h2>
+        <p style="color: var(--text-muted);">Add new elite experiences to the world-class gallery.</p>
+    </div>
+
+    <form id="placeForm">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="form-group">
+                <label>System Identifier</label>
+                <input type="text" placeholder="e.g. manali" id="name" class="lux-input" required>
+            </div>
+            <div class="form-group">
+                <label>Display Title</label>
+                <input type="text" placeholder="e.g. Manali Peaks" id="title" class="lux-input" required>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="form-group">
+                <label>State Region</label>
+                <input type="text" placeholder="e.g. Himachal Pradesh" id="state" class="lux-input" required>
+            </div>
+            <div class="form-group">
+                <label>Urban Center (City)</label>
+                <input type="text" placeholder="e.g. Manali" id="city" class="lux-input">
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="form-group">
+                <label>Experience Category</label>
+                <input type="text" placeholder="e.g. Adventure" id="category" class="lux-input">
+            </div>
+            <div class="form-group">
+                <label>Visual Asset URL</label>
+                <input type="text" placeholder="e.g. images/manali.jpg" id="image" class="lux-input">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Narrative Description</label>
+            <textarea placeholder="Tell the story of this destination..." id="description" class="lux-input lux-textarea"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Prime Season (Best Time)</label>
+            <input type="text" placeholder="e.g. October to June" id="bestTime" class="lux-input">
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <button type="submit" class="search-btn" style="width: 100%; padding: 20px;">Publish Destination</button>
+            <a href="index.html" style="display: block; margin-top: 1.5rem; color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.9rem;">Back to Main Platform</a>
+        </div>
+    </form>
+</div>
+
+<script>
+document.getElementById("placeForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value.toLowerCase(),
+        title: document.getElementById("title").value,
+        state: document.getElementById("state").value.toLowerCase(),
+        city: document.getElementById("city").value,
+        category: document.getElementById("category").value.toLowerCase(),
+        image: document.getElementById("image").value,
+        description: document.getElementById("description").value,
+        bestTime: document.getElementById("bestTime").value
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/add-place", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+            alert("Destination Published to the Elite Gallery! 🔥");
+            document.getElementById("placeForm").reset();
+        } else {
+            alert("Failed to publish. Check server connection.");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Critical Error: Unable to reach the publishing engine.");
+    }
+});
+</script>
+
+</body>
+</html>
