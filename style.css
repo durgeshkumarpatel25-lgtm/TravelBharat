@@ -807,3 +807,157 @@ section {
         font-size: 3.5rem;
     }
 }
+
+/* MOBILE RESPONSIVE ENHANCEMENTS */
+@media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 1rem 5%;
+    }
+    .navbar.scrolled {
+        padding: 1rem 5%;
+    }
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .nav-cta {
+        margin-top: 5px;
+    }
+
+    /* Hero Section */
+    .hero {
+        padding: 120px 5% 50px;
+    }
+    .hero h2 {
+        font-size: 2.5rem;
+    }
+    .search-wrapper {
+        flex-direction: column;
+        border-radius: 20px;
+        background: transparent;
+        box-shadow: none;
+        gap: 10px;
+        border: none;
+        padding: 0;
+    }
+    .search-box {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .search-btn {
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    /* Trust Bar */
+    div[style*="background: rgb(140, 235, 85)"] > div {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    div[style*="background: rgb(140, 235, 85)"] h3 {
+        font-size: 1rem !important;
+    }
+
+    /* Sections General */
+    section {
+        padding: 60px 5% !important;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Stats Section Override */
+    section[style*="var(--dark)"] > div {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 2rem !important;
+    }
+    section[style*="var(--dark)"] h4 {
+        font-size: 2.5rem !important;
+    }
+
+    /* Filters */
+    .lux-filters {
+        flex-wrap: wrap;
+        justify-content: center;
+        border-radius: 20px;
+    }
+    .filter-tab {
+        flex: 1 1 40%;
+        text-align: center;
+    }
+
+    /* Grid Container */
+    .grid-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Smaller mobile tweaks */
+    section[style*="var(--dark)"] > div {
+        grid-template-columns: 1fr !important;
+    }
+    .hero h2 {
+        font-size: 2rem;
+    }
+    .nav-links {
+        display: none; /* Can be toggled with a hamburger menu later if needed, but for now we just show it on 768px and hide on very small if it gets too cluttered, actually let's keep it wrapping */
+        display: flex;
+        font-size: 0.8rem;
+    }
+}
+
+/* WHATSAPP FLOAT */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 65px;
+    height: 65px;
+    background-color: #25d366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    z-index: 9999;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 15px 35px rgba(37, 211, 102, 0.5);
+    background-color: #128c7e;
+}
+
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 20px;
+        left: 20px;
+        width: 55px;
+        height: 55px;
+    }
+    .whatsapp-float svg {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* ASHOKA CHAKRA SPIN */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

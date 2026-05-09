@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!--mobile resposive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TravelBharat | Discover India Like Never Before</title>
     <link rel="stylesheet" href="style.css">
@@ -10,7 +9,7 @@
 <body>
 
 <!-- NAVBAR -->
-<header class="navbar glass" style="background-color: rgb(248, 107, 14);">
+<header class="navbar glass" style="background-color: rgb(255, 119, 28);">
     <h1 class="logo">Travel<b>Bharat</b></h1>
     <ul class="nav-links">
         <li><a href="#hero">Home</a></li>
@@ -19,7 +18,9 @@
         <li><a href="#about">About</a></li>
     </ul>
     <div class="nav-cta">
-        <button class="search-btn" style="padding: 10px 25px; font-size: 0.8rem;">Plan a Trip</button>
+        <a href="#destinations" style="text-decoration: none;">
+            <button class="search-btn" style="padding: 10px 25px; font-size: 0.8rem;">Plan a Trip</button>
+        </a>
     </div>
 </header>
 
@@ -28,17 +29,21 @@
     <div class="hero-content">
         <span class="section-tag" style="animation: fadeInUp 1s cubic-bezier(0.19, 1, 0.22, 1);">Premium Travel Experience</span>
         <h2>India Awaits Your <br>Discovery.</h2>
-        <p>Experience the luxury of cultural diversity. From the serene backwaters of Kerala to the majestic forts of Rajasthan, explore India in style.</p>
+        <p>Discover the hidden wonders, vibrant cultures, and timeless heritage of incredible India.</p>
         
         <div class="search-wrapper">
             <input type="text" id="searchInput" class="search-box" placeholder="Explore destinations, states, or themes...">
             <button class="search-btn">Search Now</button>
         </div>
+        
+        <div style="margin-top: 50px; display: flex; justify-content: center; animation: fadeInUp 1s 0.6s both;">
+            <img src="images/ashoka-chakra.png" alt="Ashoka Chakra" style="width: 100px; height: 100px; opacity: 0.9; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05)); animation: spin 30s linear infinite;">
+        </div>
     </div>
 </section>
 
 <!-- TRUST BAR -->
-<div style="background: rgb(140, 235, 85); padding: 40px 0; border-bottom: 1px solid #f1f5f9;">
+<div style="background: rgb(86, 234, 0); padding: 40px 0; border-bottom: 1px solid #f1f5f9;">
     <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; opacity: 0.5; filter: grayscale(1);">
         <h3 style="font-size: 1.5rem; font-weight: 800; color: #000000;">TOURISM INDIA</h3>
         <h3 style="font-size: 1.5rem; font-weight: 800; color: #000000;">LUXURY TRAVEL</h3>
@@ -130,12 +135,10 @@
         </div>
 
         <div>
-            <h4 class="footer-title">Join the Journey</h4>
-            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1.5rem;">Subscribe to receive elite travel guides and hidden gem alerts.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Your Email" class="newsletter-input">
-                <button type="submit" class="newsletter-btn">Join</button>
-            </form>
+            <h4 class="footer-title">About Us</h4>
+            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.8;">
+                We are your ultimate all-in-one travel companion. We provide everything you need in one single place, helping people effortlessly discover, plan, and journey anywhere across the incredible landscapes of India.
+            </p>
         </div>
     </div>
 
@@ -160,6 +163,12 @@
         else nav.classList.remove('scrolled');
     });
 </script>
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/74897710748" target="_blank" class="whatsapp-float" aria-label="Contact us on WhatsApp">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="white">
+        <path d="M16.035 2.143c-7.66 0-13.89 6.23-13.89 13.89 0 2.45.645 4.84 1.867 6.945L2.14 29.856l7.042-1.848c2.03.11 4.343 1.764 6.852 1.764 7.66 0 13.89-6.23 13.89-13.89 0-7.66-6.23-13.89-13.89-13.89zM16.035 27.464c-2.227 0-4.412-.584-6.33-1.688l-.454-.268-4.708 1.236 1.254-4.588-.295-.47c-1.222-1.956-1.866-4.228-1.866-6.57 0-6.732 5.48-12.214 12.214-12.214s12.214 5.482 12.214 12.214-5.48 12.214-12.214 12.214zm6.703-9.172c-.368-.184-2.176-1.074-2.513-1.196-.338-.124-.583-.184-.828.184s-.95 1.196-1.166 1.44c-.214.246-.43.276-.797.092-.368-.184-1.554-.572-2.96-1.826-1.094-1.026-1.834-2.29-2.048-2.66-.214-.368-.023-.566.16-.75.166-.164.368-.43.552-.644.184-.215.246-.368.368-.614.123-.245.06-.46-.03-.644-.093-.184-.828-1.995-1.135-2.73-.3-.72-.605-.623-.828-.635-.214-.012-.46-.012-.705-.012-.246 0-.645.092-.982.46s-1.288 1.258-1.288 3.068 1.32 3.558 1.503 3.804c.184.246 2.593 3.956 6.277 5.546.877.38 1.562.607 2.096.777.88.28 1.68.24 2.316.146.71-.106 2.176-.89 2.483-1.75.307-.86.307-1.595.215-1.75-.093-.154-.338-.246-.706-.43z"/>
+    </svg>
+</a>
 
 </body>
 </html>
