@@ -4,8 +4,7 @@ const searchInput = document.getElementById("searchInput");
 let allPlaces = [];
 
 // 🔥 API CALL
-fetch(`http://localhost:5000/places?t=${Date.now()}`)
-fetch("https://travelbharatbackend.onrender.com/places")
+fetch(`${CONFIG.BASE_URL}/places?t=${Date.now()}`)
     .then(res => {
         if (!res.ok) throw new Error("Failed to fetch places");
         return res.json();

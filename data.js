@@ -3,7 +3,7 @@ const container = document.getElementById("placeContainer") || document.getEleme
 let places = [];
 
 // 🔥 API CALL
-fetch(`http://localhost:5000/places?t=${Date.now()}`)
+fetch(`${CONFIG.BASE_URL}/places?t=${Date.now()}`)
     .then(res => res.json())
     .then(data => {
         places = data;
@@ -32,7 +32,7 @@ function defaultRender(data) {
     if (!container) return;
     container.innerHTML = "";
     if (!data || data.length === 0) {
-        container.innerHTML = "<p style='text-align:center;'>No places found. <a href='http://localhost:5000/add' target='_blank'>Seed Data</a></p>";
+        container.innerHTML = `<p style='text-align:center;'>No places found. <a href='${CONFIG.BASE_URL}/add' target='_blank'>Seed Data</a></p>`;
         return;
     }
     data.forEach(place => {

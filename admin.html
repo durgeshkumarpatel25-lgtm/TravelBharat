@@ -108,6 +108,7 @@
     </form>
 </div>
 
+<script src="config.js"></script>
 <script>
 document.getElementById("placeForm").addEventListener("submit", async function(e){
     e.preventDefault();
@@ -124,7 +125,7 @@ document.getElementById("placeForm").addEventListener("submit", async function(e
     };
 
     try {
-        const response = await fetch("http://localhost:5000/add-place", {
+        const response = await fetch(`${CONFIG.BASE_URL}/add-place`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
