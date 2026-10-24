@@ -1,88 +1,188 @@
-const params = new URLSearchParams(window.location.search);
-const stateName = params.get("state") ? params.get("state").trim() : null;
-console.log("State Name from URL:", stateName);
+// ==========================================================================
+// TRAVELBHARAT ELITE - REGIONAL STATE CONTROLLER
+// ==========================================================================
 
-// elements
+const params = new URLSearchParams(window.location.search);
+const stateParam = params.get("state") ? params.get("state").trim() : null;
+const displayParam = params.get("display") ? params.get("display").trim() : null;
+
 const stateTitle = document.getElementById("stateTitle");
 const stateDesc = document.getElementById("stateDesc");
 const stateContainer = document.getElementById("stateContainer");
+const regionalHero = document.getElementById("regionalHero");
 
-// State Descriptions Map
-const descriptions = {
-    "rajasthan": "The Land of Kings, Rajasthan is a tapestry of desert sands, majestic forts, and vibrant culture. Home to the Thar Desert and the ancient Aravalli Range, it offers a glimpse into India's royal past.",
-    "kerala": "God's Own Country, Kerala is a tropical paradise of palm-lined backwaters, misty hill stations, and rich spice plantations. It is the cradle of Ayurveda and traditional performing arts.",
-    "goa": "India's Sunshine State, Goa is famous for its endless golden beaches, Portuguese heritage, and vibrant nightlife. It is a unique blend of coastal relaxation and cultural history.",
-    "himachal pradesh": "The Abode of Snow, Himachal is a majestic mountain region of towering peaks, lush valleys, and serene monasteries. It is a haven for adventurers and spiritual seekers alike.",
-    "madhya pradesh": "The Heart of Incredible India, MP is home to dense teak forests, ancient temples, and rich tribal heritage. It is where history meets the wild, from Khajuraho to Kanha.",
-    "uttar pradesh": "The Cradle of Civilization, UP is the spiritual soul of India. From the timeless ghats of Varanasi to the iconic Taj Mahal, it is a journey through deep spirituality and history.",
-    "chhattisgarh": "The Tribal Heartland, Chhattisgarh is a land of unexplored forests, breathtaking waterfalls, and ancient folk traditions. It is one of India's most ecologically diverse and culturally rich regions."
+const STATE_DETAILS = {
+    "rajasthan": {
+        title: "Rajasthan • The Sovereign Land of Kings",
+        desc: "A golden tapestry of Thar Desert sands, invincible hilltop fortresses, and opulent Maharaja palaces celebrating timeless chivalry and artistry.",
+        hero: "images/jaisalmer.jpg"
+    },
+    "kerala": {
+        title: "Kerala • God's Own Emerald Coast",
+        desc: "A tropical coastal haven of emerald palm-lined backwaters, misty Cardamom hills, and authentic Ayurvedic wellness sanctuaries.",
+        hero: "images/kerala.jpg"
+    },
+    "goa": {
+        title: "Goa • The Azure Portuguese Riviera",
+        desc: "Endless golden beaches, private yacht charters, sun-kissed spice plantations, and historic Baroque churches along the Arabian Sea.",
+        hero: "images/goa.jpg"
+    },
+    "himachal pradesh": {
+        title: "Himachal Pradesh • Abode of Snow & Cedar",
+        desc: "Majestic alpine summits, high mountain passes, ancient wooden temples, and peaceful monasteries nestled in towering pine valleys.",
+        hero: "images/spiti.jpg"
+    },
+    "madhya pradesh": {
+        title: "Madhya Pradesh • Heart of Incredible India",
+        desc: "Dense teak jungles where Bengal tigers roam free, UNESCO Khajuraho temples, and serene hilltop sanctuaries steeped in tribal folklore.",
+        hero: "images/kanha.jpg"
+    },
+    "uttar pradesh": {
+        title: "Uttar Pradesh • The Cradle of Civilization",
+        desc: "The sacred soul of Bharat, home to the eternal dawn ghats of Varanasi and the immortal white marble wonder of the Taj Mahal in Agra.",
+        hero: "images/tajmahal.jpg"
+    },
+    "uttarakhand": {
+        title: "Uttarakhand • Devbhumi The Land of Gods",
+        desc: "Sacred Himalayan heights, roaring sacred rivers, holy Char Dham pilgrimage sanctums, and the world's premier yoga retreats in Rishikesh.",
+        hero: "images/kedarnath.jpg"
+    },
+    "ladakh": {
+        title: "Ladakh • The High-Altitude Moonland",
+        desc: "Snow-crowned passes, sapphire-blue high alpine lakes, centuries-old Buddhist gompas, and untamed celestial starlight skies.",
+        hero: "images/ladakh.jpg"
+    },
+    "meghalaya": {
+        title: "Meghalaya • The Abode of Clouds",
+        desc: "Living root bridges woven over centuries, crystal-clear emerald rivers at Dawki, and dramatic mist-draped waterfalls plunging into deep gorges.",
+        hero: "images/meghalaya.jpg"
+    },
+    "jammu & kashmir": {
+        title: "Jammu & Kashmir • Paradise on Earth",
+        desc: "The revered mountain sanctum of Vaishno Devi, alpine meadows, and timeless spiritual devotion amidst the sacred Trikuta peaks.",
+        hero: "images/vaishnodevi.jpg"
+    },
+    "odisha": {
+        title: "Odisha • Sacred Sands & Architectural Grace",
+        desc: "Golden sunrise shores on the Bay of Bengal, the divine sanctum of Lord Jagannath, and world-renowned sand sculpture traditions.",
+        hero: "images/puri.jpg"
+    },
+    "chhattisgarh": {
+        title: "Chhattisgarh • The Tribal Heartland",
+        desc: "Ancient untouched forests, gravity-defying streams at Mainpat, cascading jungle waterfalls, and deep prehistoric rock art traditions.",
+        hero: "images/ulta pani.jpg"
+    }
 };
 
-// Override renderPlaces to filter by state on this page
-function renderPlaces(allData) {
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof places !== "undefined" && Array.isArray(places)) {
+        renderStatePage(places);
+    }
+
+    syncBackendData((updatedPlaces) => {
+        renderStatePage(updatedPlaces);
+    });
+});
+
+function renderStatePage(allData) {
     if (!stateContainer) return;
 
-    if (!stateName) {
-        if (stateTitle) stateTitle.innerText = "Explore All Regions";
-        if (stateDesc) stateDesc.innerText = "Discover the diverse beauty and hidden gems across all of India's states.";
-    } else {
-        const capitalizedState = stateName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-        if (stateTitle) stateTitle.innerText = capitalizedState;
-        if (stateDesc) stateDesc.innerText = descriptions[stateName.toLowerCase()] || `Explore the hidden gems and breathtaking landscapes of ${capitalizedState}.`;
+    let targetKey = "";
+    let displayName = "All Sovereign Regions";
+
+    if (displayParam) {
+        displayName = displayParam;
+        targetKey = displayParam.toLowerCase().trim();
+    } else if (stateParam) {
+        displayName = stateParam;
+        targetKey = stateParam.toLowerCase().trim();
     }
+
+    // Match with dictionary
+    let matchedDetail = null;
+    for (let key in STATE_DETAILS) {
+        if (targetKey.includes(key) || key.includes(targetKey)) {
+            matchedDetail = STATE_DETAILS[key];
+            break;
+        }
+    }
+
+    if (matchedDetail) {
+        if (stateTitle) stateTitle.innerText = matchedDetail.title;
+        if (stateDesc) stateDesc.innerText = matchedDetail.desc;
+        if (regionalHero && matchedDetail.hero) {
+            regionalHero.style.backgroundImage = `url('${matchedDetail.hero}')`;
+        }
+    } else if (targetKey) {
+        const capitalized = displayName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        if (stateTitle) stateTitle.innerText = `${capitalized} • Sovereign Territory`;
+        if (stateDesc) stateDesc.innerText = `Explore handpicked luxury estates and private itineraries throughout ${capitalized}.`;
+    } else {
+        if (stateTitle) stateTitle.innerText = "All Sovereign Regions";
+        if (stateDesc) stateDesc.innerText = "Discover the diverse luxury and timeless heritage across every state of Incredible India.";
+    }
+
+    // Filter places
+    const filtered = !targetKey ? allData : allData.filter(p => {
+        const pState = (p.state || "").toLowerCase().replace(/[^a-z0-9]/g, '');
+        const cleanTarget = targetKey.replace(/[^a-z0-9]/g, '');
+        return pState === cleanTarget || pState.includes(cleanTarget) || cleanTarget.includes(pState);
+    });
 
     stateContainer.innerHTML = "";
 
-    console.log("Filtering places for state:", stateName);
-    const displayParam = params.get("display");
-
-    if (stateName && displayParam) {
-        const capitalizedState = displayParam.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-        if (stateTitle) stateTitle.innerText = capitalizedState;
-        if (stateDesc) stateDesc.innerText = descriptions[displayParam.toLowerCase()] || `Explore the hidden gems and breathtaking landscapes of ${capitalizedState}.`;
-    }
-
-    const filtered = !stateName ? allData : allData.filter(p => {
-        const pState = (p.state || "").replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-        const sName = stateName.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-        return pState === sName;
-    });
-
-    console.log("Filtered Results Count:", filtered.length);
-
     if (filtered.length === 0) {
-        stateContainer.innerHTML = "<h2 style='grid-column: 1/-1; text-align:center; padding: 50px;'>Coming soon to this region...</h2>";
+        stateContainer.innerHTML = `
+            <div style="text-align: center; padding: 80px 20px; grid-column: 1 / -1; background: rgba(16, 25, 46, 0.4); border-radius: var(--radius-xl); border: 1px dashed var(--gold-border);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+                <h3 style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--text-pure); margin-bottom: 8px;">Private Curations In Progress</h3>
+                <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem;">Our historians are actively curating new sovereign estates in this region. Check back soon or contact your concierge.</p>
+                <a href="index.html#states" class="btn-gold">Explore Other Regions →</a>
+            </div>
+        `;
         return;
     }
 
-    // render
-    filtered.forEach(function (place) {
-        const capitalizedTitle = (place.title || '').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-        const capitalizedState = (place.state || '').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    filtered.forEach((place, index) => {
+        const title = (place.title || place.name || "").split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        const stateStr = (place.state || "India").toUpperCase();
+        const cityStr = place.city ? `${place.city}, ` : "";
+        const category = (place.category || "Luxury").toUpperCase();
+        const rating = place.rating || 4.96;
+        const rawTime = place.bestTime || "";
+        const bestTime = (rawTime.length > 0 && rawTime.length < 32) ? rawTime : "October to March";
 
-        stateContainer.innerHTML += `
-        <div class="lux-card reveal">
-            <a href="place.html?name=${encodeURIComponent(place.name || '')}" style="text-decoration: none; color: inherit;">
-                <div class="card-img-wrapper">
-                    <img src="${place.image || 'images/default.jpg'}" onerror="this.onerror=null; this.src='images/default.jpg';">
-                    <div class="card-badge">Premium Experience</div>
+        const card = document.createElement("div");
+        card.className = "lux-card reveal active";
+        card.style.animationDelay = `${(index % 6) * 0.08}s`;
+
+        card.innerHTML = `
+            <div class="card-img-wrapper">
+                <span class="card-badge">${category}</span>
+                <img src="${place.image || 'images/default.jpg'}" 
+                     alt="${title}"
+                     onerror="this.onerror=null; this.src='images/tajmahal.jpg';">
+                <div class="card-season-pill">
+                    <span>🗓️</span> ${bestTime}
                 </div>
-                <div class="card-content">
-                    <h3>${capitalizedTitle}</h3>
-                    <p>${capitalizedState} • 📍 Explore Heritage</p>
+            </div>
+            <div class="card-content">
+                <div class="card-location">
+                    <span>📍</span> ${cityStr}${stateStr}
                 </div>
-            </a>
-        </div>
+                <h3 class="card-title">${title}</h3>
+                <p class="card-description">${place.description || 'Step into royal serenity, where centuries of architectural mastery and pristine natural beauty converge.'}</p>
+                <div class="card-footer">
+                    <div class="card-rating">
+                        <span>★</span> ${rating.toFixed(2)}
+                    </div>
+                    <div class="card-btn-group">
+                        <a href="place.html?name=${encodeURIComponent(place.name || '')}" class="card-link-btn">Explore Guide →</a>
+                    </div>
+                </div>
+            </div>
         `;
+
+        stateContainer.appendChild(card);
     });
-
-    // Trigger reveal animation for newly added cards
-    setTimeout(() => {
-        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-    }, 50);
-}
-
-// If data is already loaded in data.js, call renderPlaces manually
-if (typeof places !== "undefined" && places.length > 0) {
-    renderPlaces(places);
 }

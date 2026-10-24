@@ -3,68 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Regions | TravelBharat Elite</title>
+    <title>Regional Portals | TravelBharat Elite</title>
+    <meta name="description" content="Discover regional sovereign itineraries across India's greatest states.">
+    
     <link rel="stylesheet" href="style.css">
     <style>
         .regional-hero {
-            height: 50vh;
+            min-height: 60vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
-                        url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=2071');
+            position: relative;
+            padding: 140px 7% 80px;
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: white;
-            border-radius: 0 0 60px 60px;
-            margin-bottom: -60px;
+            overflow: hidden;
         }
-        .regional-hero h2 {
-            font-size: clamp(3rem, 10vw, 6rem);
-            color: white;
-            letter-spacing: -2px;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .regional-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 8, 17, 0.4) 0%, rgba(5, 8, 17, 0.85) 70%, var(--bg-void) 100%);
+            z-index: 1;
+        }
+        .regional-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        .regional-title {
+            font-family: var(--font-heading);
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            color: var(--text-pure);
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+        }
+        .regional-desc {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 750px;
+            margin: 0 auto;
         }
     </style>
 </head>
-<body>
+<body style="background: var(--bg-void);">
 
 <!-- NAVBAR -->
-<header class="navbar scrolled">
-    <h1 class="logo">Travel<b>Bharat</b></h1>
+<header class="navbar scrolled" id="navbar">
+    <a href="index.html#hero" class="logo-container">
+        <div class="logo-crest">
+            <span>भ</span>
+        </div>
+        <div>
+            <span class="logo-text">Travel<b>Bharat</b></span>
+            <span class="logo-tagline">Elite Concierge • Estd. 2026</span>
+        </div>
+    </a>
+
     <ul class="nav-links">
         <li><a href="index.html#hero">Home</a></li>
-        <li><a href="index.html#states">States</a></li>
-        <li><a href="index.html#destinations">Explore</a></li>
+        <li><a href="index.html#states" class="active">States</a></li>
+        <li><a href="index.html#destinations">Destinations</a></li>
+        <li><a href="index.html#planner">Bespoke Planner</a></li>
         <li><a href="index.html#about">About</a></li>
     </ul>
-    <div class="nav-cta">
-        <a href="index.html" class="search-btn" style="text-decoration: none; padding: 10px 25px; font-size: 0.8rem;">Explore More</a>
+
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <a href="index.html#states" class="btn-outline" style="text-decoration: none;">← All Regions</a>
+        <a href="https://wa.me/917489771078?text=Hello TravelBharat! I wish to inquire about regional itineraries." target="_blank" class="btn-gold" style="text-decoration: none;">
+            <span>VIP Booking</span>
+        </a>
     </div>
 </header>
 
 <!-- REGIONAL HERO -->
-<section class="regional-hero reveal">
-    <div class="hero-content">
-        <span class="section-tag" style="color: rgba(255,255,255,0.8);">Elite Regional Portal</span>
-        <h2 id="stateTitle">State</h2>
-        <p id="stateDesc" style="color: rgba(255,255,255,0.9); font-weight: 500;">Journey through the unique heritage and soul of this region.</p>
+<section class="regional-hero reveal active" id="regionalHero">
+    <div class="regional-hero-content">
+        <span class="gold-badge" style="margin-bottom: 1.5rem;">Sovereign Regional Gateway</span>
+        <h1 class="regional-title" id="stateTitle">Regional Territory</h1>
+        <p class="regional-desc" id="stateDesc">Embark on a voyage through the architectural, cultural, and spiritual heritage of this sovereign Indian region.</p>
     </div>
 </section>
 
-<!-- BACK BUTTON -->
-<div class="back-container" style="position: relative; z-index: 100;">
-    <a href="index.html" class="back-btn" style="background: white; padding: 12px 25px; border-radius: 50px; box-shadow: var(--shadow-md);">
-        <span>←</span> Explore All Regions
-    </a>
-</div>
+<!-- REGIONAL DESTINATIONS SECTION -->
+<section style="background: var(--bg-void); padding-top: 50px;">
+    <div class="section-header reveal active">
+        <span class="section-tag">Curated Estates & Escapes</span>
+        <h2 class="section-title">Regional Portfolio</h2>
+        <p class="section-desc">Handpicked destinations and private sanctuaries within this region.</p>
+    </div>
 
-<!-- PLACES GRID -->
-<section style="padding-top: 100px;">
     <div class="grid-container" id="stateContainer">
-        <!-- Luxury Cards via state.js -->
+        <!-- Rendered via state.js -->
     </div>
 </section>
 
@@ -72,60 +107,64 @@
 <footer class="main-footer" id="about">
     <div class="footer-grid">
         <div class="footer-brand">
-            <h1 class="logo" style="color: white; margin-bottom: 1.5rem;">Travel<b>Bharat</b></h1>
+            <a href="index.html" class="logo-container" style="margin-bottom: 1.2rem;">
+                <div class="logo-crest">
+                    <span>भ</span>
+                </div>
+                <span class="logo-text">Travel<b>Bharat</b></span>
+            </a>
             <p>Your premier gateway to exploring the soul of India. From the snow-capped Himalayas to the tropical backwaters of Kerala, we curate the finest experiences for the modern traveler.</p>
         </div>
 
         <div>
-            <h4 class="footer-title">Quick Links</h4>
+            <h4 class="footer-title">Navigation</h4>
             <ul class="footer-links">
-                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#hero">Grand Home</a></li>
                 <li><a href="index.html#states">Explore States</a></li>
                 <li><a href="index.html#destinations">Popular Places</a></li>
-                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#planner">Bespoke Planner</a></li>
             </ul>
         </div>
 
         <div>
-            <h4 class="footer-title">Support</h4>
+            <h4 class="footer-title">Concierge Support</h4>
             <ul class="footer-links">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">Travel Advisory</a></li>
-                <li><a href="#">Contact Support</a></li>
+                <li><a href="#">Privacy Protocol</a></li>
+                <li><a href="#">VIP Advisory</a></li>
+                <li><a href="https://wa.me/917489771078">24/7 Concierge Hotline</a></li>
             </ul>
         </div>
 
-        <div>
-            <h4 class="footer-title">Join the Journey</h4>
-            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1.5rem;">Subscribe to receive elite travel guides and hidden gem alerts.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Your Email" class="newsletter-input">
-                <button type="submit" class="newsletter-btn">Join</button>
+        <div class="footer-newsletter-col">
+            <h4 class="footer-title">The Sovereign Gazette</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Subscribe for secret destination unveilings and private palace access invitations.</p>
+            <form class="newsletter-box" onsubmit="event.preventDefault(); alert('✨ Welcome to The Sovereign Gazette!');">
+                <input type="email" placeholder="Your Private Email" class="newsletter-input" required>
+                <button type="submit" class="btn-gold" style="padding: 10px 22px; font-size: 0.8rem;">Join</button>
             </form>
         </div>
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 TravelBharat Elite. All rights reserved. Crafted for excellence.</p>
+        <p>© 2026 TravelBharat Elite. Handcrafted for Sovereign Excellence.</p>
         <div class="social-links">
-            <a href="#">FB</a>
-            <a href="#">TW</a>
-            <a href="#">IG</a>
-            <a href="#">IN</a>
+            <a href="#" class="social-link">IG</a>
+            <a href="#" class="social-link">TW</a>
+            <a href="#" class="social-link">IN</a>
+            <a href="#" class="social-link">YT</a>
         </div>
     </div>
 </footer>
 
-<script src="config.js"></script>
-<script src="data.js?v=2"></script>
-<script src="state.js?v=2"></script>
-<script>
-    // Initial reveal
-    setTimeout(() => {
-        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-    }, 100);
-</script>
+<!-- FLOATING VIP CONCIERGE -->
+<a href="https://wa.me/917489771078" target="_blank" class="whatsapp-float" aria-label="WhatsApp Concierge">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white">
+        <path d="M16.035 2.143c-7.66 0-13.89 6.23-13.89 13.89 0 2.45.645 4.84 1.867 6.945L2.14 29.856l7.042-1.848c2.03.11 4.343 1.764 6.852 1.764 7.66 0 13.89-6.23 13.89-13.89 0-7.66-6.23-13.89-13.89-13.89zM16.035 27.464c-2.227 0-4.412-.584-6.33-1.688l-.454-.268-4.708 1.236 1.254-4.588-.295-.47c-1.222-1.956-1.866-4.228-1.866-6.57 0-6.732 5.48-12.214 12.214-12.214s12.214 5.482 12.214 12.214-5.48 12.214-12.214 12.214zm6.703-9.172c-.368-.184-2.176-1.074-2.513-1.196-.338-.124-.583-.184-.828.184s-.95 1.196-1.166 1.44c-.214.246-.43.276-.797.092-.368-.184-1.554-.572-2.96-1.826-1.094-1.026-1.834-2.29-2.048-2.66-.214-.368-.023-.566.16-.75.166-.164.368-.43.552-.644.184-.215.246-.368.368-.614.123-.245.06-.46-.03-.644-.093-.184-.828-1.995-1.135-2.73-.3-.72-.605-.623-.828-.635-.214-.012-.46-.012-.705-.012-.246 0-.645.092-.982.46s-1.288 1.258-1.288 3.068 1.32 3.558 1.503 3.804c.184.246 2.593 3.956 6.277 5.546.877.38 1.562.607 2.096.777.88.28 1.68.24 2.316.146.71-.106 2.176-.89 2.483-1.75.307-.86.307-1.595.215-1.75-.093-.154-.338-.246-.706-.43z"/>
+    </svg>
+</a>
 
+<script src="config.js"></script>
+<script src="data.js?v=3"></script>
+<script src="state.js?v=3"></script>
 </body>
 </html>

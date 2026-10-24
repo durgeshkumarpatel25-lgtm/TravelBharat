@@ -3,172 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelBharat | Discover India Like Never Before</title>
+    <title>TravelBharat Elite | Discover Incredible India in Unrivaled Luxury</title>
+    <meta name="description" content="Experience the timeless heritage, majestic royal palaces, serene backwaters, and pristine Himalayan peaks of Incredible India with TravelBharat Elite concierge.">
+    
+    <!-- Design System & Typography -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<header class="navbar glass" style="background-color: rgb(255, 119, 28);">
-    <h1 class="logo">Travel<b>Bharat</b></h1>
-    <ul class="nav-links">
-        <li><a href="#hero">Home</a></li>
+<!-- MASTER LUXURY NAVBAR -->
+<header class="navbar" id="navbar">
+    <a href="#hero" class="logo-container" aria-label="TravelBharat Home">
+        <div class="logo-crest">
+            <span>भ</span>
+        </div>
+        <div>
+            <span class="logo-text">Travel<b>Bharat</b></span>
+            <span class="logo-tagline">Elite Concierge • Estd. 2026</span>
+        </div>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="active">Home</a></li>
         <li><a href="#states">States</a></li>
-        <li><a href="#destinations">Explore</a></li>
+        <li><a href="#destinations">Destinations</a></li>
+        <li><a href="#planner">Bespoke Planner</a></li>
+        <li><a href="#reviews">Journals</a></li>
         <li><a href="#about">About</a></li>
     </ul>
-    <div class="nav-cta">
-        <a href="#destinations" style="text-decoration: none;">
-            <button class="search-btn" style="padding: 10px 25px; font-size: 0.8rem;">Plan a Trip</button>
+
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <a href="#planner" class="btn-gold" style="text-decoration: none;">
+            <span>Curate Journey</span>
+            <span>✦</span>
         </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
     </div>
 </header>
 
-<!-- HERO -->
+<!-- CINEMATIC HERO -->
 <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
     <div class="hero-content">
-        <span class="section-tag" style="animation: fadeInUp 1s cubic-bezier(0.19, 1, 0.22, 1);">Premium Travel Experience</span>
-        <h2>India Awaits Your <br>Discovery hiiii.</h2>
-        <p>Discover the hidden wonders, vibrant cultures, and timeless heritage of incredible India.</p>
-        
-        <div class="search-wrapper">
-            <input type="text" id="searchInput" class="search-box" placeholder="Explore destinations, states, or themes...">
-            <button class="search-btn">Search Now</button>
+        <div class="hero-badge-container">
+            <span class="gold-badge">The Sovereign Voyage Across Incredible Bharat</span>
         </div>
-        
-        <div style="margin-top: clamp(20px, 5vw, 50px); display: flex; justify-content: center; animation: fadeInUp 1s 0.6s both;">
-            <img src="images/ashoka-chakra.png" alt="Ashoka Chakra" style="width: clamp(60px, 10vw, 120px); height: clamp(60px, 10vw, 120px); opacity: 0.9; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05)); animation: spin 30s linear infinite;">
+
+        <h1>
+            India Awaits Your <br>
+            <span class="text-gold">Grand Discovery.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Unveil private royal fortresses, sacred Himalayan peaks, secluded tropical backwaters, and timeless heritage curated for the discerning world traveler.
+        </p>
+
+        <!-- $500K CONCIERGE SEARCH DOCK -->
+        <div class="concierge-dock">
+            <div class="dock-field">
+                <span class="dock-icon">📍</span>
+                <div class="dock-label-group">
+                    <span class="dock-label">Destination / Region</span>
+                    <input type="text" id="searchInput" class="dock-input" placeholder="Search places, states, themes...">
+                </div>
+            </div>
+
+            <div class="dock-field">
+                <span class="dock-icon">🏛️</span>
+                <div class="dock-label-group">
+                    <span class="dock-label">Experience Theme</span>
+                    <select id="themeSelect" class="dock-select">
+                        <option value="all">All Experiences</option>
+                        <option value="heritage">Royal Heritage & Forts</option>
+                        <option value="nature">Untouched Nature & Wildlife</option>
+                        <option value="adventure">Alpine Adventure & Passes</option>
+                        <option value="spiritual">Sacred Spiritual Sanctuaries</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="dock-field">
+                <span class="dock-icon">📅</span>
+                <div class="dock-label-group">
+                    <span class="dock-label">Ideal Season</span>
+                    <select id="seasonSelect" class="dock-select">
+                        <option value="all">Any Season</option>
+                        <option value="winter">Winter (Oct - Mar)</option>
+                        <option value="summer">Summer (Apr - Jun)</option>
+                        <option value="monsoon">Monsoon (Jul - Sep)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-gold dock-btn" id="searchSubmitBtn" onclick="handleDockSearch()">
+                <span>Explore</span>
+                <span>→</span>
+            </button>
+        </div>
+
+        <!-- QUICK TRENDING EXPEDITIONS -->
+        <div class="trending-chips">
+            <span class="chip-label">Trending Now:</span>
+            <span class="chip-item" onclick="quickFilter('tajmahal')">✨ Taj Mahal</span>
+            <span class="chip-item" onclick="quickFilter('kedarnath')">🏔️ Kedarnath</span>
+            <span class="chip-item" onclick="quickFilter('kerala')">🌴 Kerala Backwaters</span>
+            <span class="chip-item" onclick="quickFilter('jaisalmer')">🏰 Golden Jaisalmer</span>
+            <span class="chip-item" onclick="quickFilter('ladakh')">❄️ Ladakh Passes</span>
+            <span class="chip-item" onclick="quickFilter('kanha')">🐅 Kanha Tiger Safari</span>
+        </div>
+
+        <!-- SEAL OF EXCELLENCE -->
+        <div class="seal-container">
+            <div class="seal-circle">
+                <img src="images/ashoka-chakra.png" alt="Sovereign Seal of India" class="seal-img">
+            </div>
+            <div class="seal-text">
+                <h4>Authenticated Heritage Concierge</h4>
+                <p>Curated by National Tourism & Cultural Preservation Historians</p>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- TRUST BAR -->
-<div style="background: rgb(86, 234, 0); padding: 40px 0; border-bottom: 1px solid #f1f5f9;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; opacity: 0.5; filter: grayscale(1);">
-        <h3 style="font-size: 1.5rem; font-weight: 800; color: #000000;">TOURISM INDIA</h3>
-        <h3 style="font-size: 1.5rem; font-weight: 800; color: #000000;">LUXURY TRAVEL</h3>
-        <h3 style="font-size: 1.5rem; font-weight: 800; color: #000000;">HERITAGE GOLD</h3>
-        <h3 style="font-size: 1.5rem; font-weight: 800; color: #000000;">ECO-WILD</h3>
+<!-- PRESTIGE RECOGNITION MARQUEE -->
+<div class="prestige-marquee">
+    <div class="marquee-content">
+        <div class="marquee-badge">
+            <span class="marquee-icon">🏛️</span>
+            <span class="marquee-title">UNESCO World Heritage Partners</span>
+        </div>
+        <div class="marquee-badge">
+            <span class="marquee-icon">⭐</span>
+            <span class="marquee-title">5-Star Luxury Hospitality Suite</span>
+        </div>
+        <div class="marquee-badge">
+            <span class="marquee-icon">🌿</span>
+            <span class="marquee-title">Certified Eco-Luxury Tourism</span>
+        </div>
+        <div class="marquee-badge">
+            <span class="marquee-icon">🛡️</span>
+            <span class="marquee-title">24/7 Dedicated Private Concierge</span>
+        </div>
+        <div class="marquee-badge">
+            <span class="marquee-icon">🏆</span>
+            <span class="marquee-title">Excellence in Indian Heritage 2026</span>
+        </div>
     </div>
 </div>
 
-<!-- STATS SECTION -->
-<section style="background: var(--dark); color: white; padding: 100px 8%;">
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center;">
-        <div>
-            <h4 style="font-size: 3.5rem; font-family: 'Outfit'; font-weight: 800; color: var(--primary);">28+</h4>
-            <p style="color: rgba(255,255,255,0.9); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 600;">States to Explore</p>
+<!-- MILESTONE STATS -->
+<section class="stats-section">
+    <div class="stats-grid">
+        <div class="stat-card reveal">
+            <div class="stat-number">28+</div>
+            <div class="stat-label">Sovereign States & Regions</div>
         </div>
-        <div>
-            <h4 style="font-size: 3.5rem; font-family: 'Outfit'; font-weight: 800; color: var(--secondary);">1k+</h4>
-            <p style="color: rgba(255,255,255,0.9); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 600;">Hidden Gems</p>
+        <div class="stat-card reveal">
+            <div class="stat-number">1,200+</div>
+            <div class="stat-label">Curated Heritage Estates</div>
         </div>
-        <div>
-            <h4 style="font-size: 3.5rem; font-family: 'Outfit'; font-weight: 800; color: var(--accent);">50k+</h4>
-            <p style="color: rgba(255,255,255,0.9); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 600;">Happy Travelers</p>
+        <div class="stat-card reveal">
+            <div class="stat-number">99.8%</div>
+            <div class="stat-label">Traveler Satisfaction Rate</div>
         </div>
-        <div>
-            <h4 style="font-size: 3.5rem; font-family: 'Outfit'; font-weight: 800; color: white;">4.9</h4>
-            <p style="color: rgba(255,255,255,0.9); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 600;">User Rating</p>
+        <div class="stat-card reveal">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">White-Glove VIP Concierge</div>
         </div>
     </div>
 </section>
 
-<!-- STATES STRIP (PATTI) -->
-<section id="states" style="padding: 40px 0;">
-    <span class="section-tag">Explore Regions</span>
-    <h2 class="section-title" style="margin-bottom: 2rem;">Discover by State</h2>
+<!-- STATES STRIP & DISCOVERY -->
+<section id="states" style="background: var(--bg-void);">
+    <div class="section-header reveal">
+        <span class="section-tag">Explore Regions</span>
+        <h2 class="section-title">Voyage Across The States</h2>
+        <p class="section-desc">From the regal desert palaces of Rajasthan to the celestial heights of Himachal, embark on regional journeys crafted with uncompromising distinction.</p>
+    </div>
+
     <div class="states-strip-wrapper">
         <div class="states-strip" id="homeStateContainer">
-            <!-- Dynamic States in Strip -->
+            <!-- Dynamically populated states with photography cards -->
         </div>
     </div>
 </section>
 
-<!-- DESTINATIONS -->
-<section class="destinations" id="destinations" style="background: white;">
-    <span class="section-tag">Destinations</span>
-    <h2 class="section-title">Top Handpicked Experiences</h2>
+<!-- HANDPICKED DESTINATIONS GALLERY -->
+<section id="destinations" style="background: radial-gradient(ellipse 60% 40% at 50% 10%, rgba(16, 25, 46, 0.7) 0%, var(--bg-void) 100%);">
+    <div class="section-header reveal">
+        <span class="section-tag">Handpicked Portfolios</span>
+        <h2 class="section-title">Curated Elite Escapes</h2>
+        <p class="section-desc">Immerse yourself in our private directory of world-famous monuments, mystical spiritual sanctums, and serene wilderness.</p>
+    </div>
 
-    <div style="margin-bottom: 50px;">
+    <!-- FILTER BAR -->
+    <div class="filter-bar-wrapper reveal">
         <div class="lux-filters">
-            <button class="filter-tab active" onclick="filterCategory('all')">All</button>
-            <button class="filter-tab" onclick="filterCategory('heritage')">Heritage</button>
-            <button class="filter-tab" onclick="filterCategory('nature')">Nature</button>
-            <button class="filter-tab" onclick="filterCategory('adventure')">Adventure</button>
-            <button class="filter-tab" onclick="filterCategory('religious')">Spiritual</button>
+            <button class="filter-tab active" onclick="filterCategory('all')">All Portfolios</button>
+            <button class="filter-tab" onclick="filterCategory('heritage')">Royal Heritage</button>
+            <button class="filter-tab" onclick="filterCategory('nature')">Nature & Coast</button>
+            <button class="filter-tab" onclick="filterCategory('adventure')">High Adventure</button>
+            <button class="filter-tab" onclick="filterCategory('spiritual')">Spiritual Sanctuaries</button>
+        </div>
+        <div class="filter-meta">
+            Showing <span id="destinationCount">19</span> Signature Destinations
         </div>
     </div>
 
-    <!-- DYNAMIC GRID -->
+    <!-- DYNAMIC CARDS GRID -->
     <div class="grid-container" id="placeContainer">
-        <!-- Content via script.js -->
+        <!-- Rendered instantly via script.js -->
     </div>
 </section>
 
-<!-- FOOTER -->
+<!-- $500K SIGNATURE FEATURE: BESPOKE JOURNEY PLANNER -->
+<section class="planner-section" id="planner">
+    <div class="section-header reveal">
+        <span class="section-tag">Bespoke Concierge</span>
+        <h2 class="section-title">Curate Your Sovereign Journey</h2>
+        <p class="section-desc">Design a private custom itinerary tailored to your exact desires, luxury level, and timeline with instant transparent estimation.</p>
+    </div>
+
+    <div class="planner-container reveal">
+        <div class="planner-grid">
+            <!-- Planner Form -->
+            <div class="planner-form">
+                <h3 class="planner-form-title">Itinerary Architect</h3>
+
+                <!-- Step 1: Vibe -->
+                <div class="planner-step">
+                    <label class="planner-step-label">
+                        <span>01</span> Choose Travel Mood
+                    </label>
+                    <div class="planner-options-row">
+                        <button class="planner-choice-btn selected" data-type="mood" data-value="royal" onclick="selectPlannerOption(this, 'mood', 'royal')">👑 Royal Palaces & Forts</button>
+                        <button class="planner-choice-btn" data-type="mood" data-value="himalayas" onclick="selectPlannerOption(this, 'mood', 'himalayas')">🏔️ Himalayan Heights</button>
+                        <button class="planner-choice-btn" data-type="mood" data-value="spiritual" onclick="selectPlannerOption(this, 'mood', 'spiritual')">🕉️ Spiritual Odyssey</button>
+                        <button class="planner-choice-btn" data-type="mood" data-value="coastal" onclick="selectPlannerOption(this, 'mood', 'coastal')">🌴 Backwaters & Beach</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Duration -->
+                <div class="planner-step">
+                    <label class="planner-step-label">
+                        <span>02</span> Journey Duration
+                    </label>
+                    <div class="planner-options-row">
+                        <button class="planner-choice-btn" data-type="duration" data-value="3" onclick="selectPlannerOption(this, 'duration', '3')">3 Days (Weekend Retreat)</button>
+                        <button class="planner-choice-btn selected" data-type="duration" data-value="7" onclick="selectPlannerOption(this, 'duration', '7')">7 Days (Grand Tour)</button>
+                        <button class="planner-choice-btn" data-type="duration" data-value="14" onclick="selectPlannerOption(this, 'duration', '14')">14 Days (Sovereign Odyssey)</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Tier -->
+                <div class="planner-step">
+                    <label class="planner-step-label">
+                        <span>03</span> Hospitality Class
+                    </label>
+                    <div class="planner-options-row">
+                        <button class="planner-choice-btn selected" data-type="tier" data-value="signature" onclick="selectPlannerOption(this, 'tier', 'signature')">Signature 5★ Heritage</button>
+                        <button class="planner-choice-btn" data-type="tier" data-value="palace" onclick="selectPlannerOption(this, 'tier', 'palace')">Maharaja Royal Suites</button>
+                        <button class="planner-choice-btn" data-type="tier" data-value="jet" onclick="selectPlannerOption(this, 'tier', 'jet')">Private Aviation & Yacht</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planner Live Preview Card -->
+            <div class="planner-preview-card" id="plannerPreview">
+                <div class="preview-badge" id="previewBadge">Grand Royal Circuit • 7 Days</div>
+                <h4 class="preview-title" id="previewTitle">The Golden Triangle & Thar Royalty</h4>
+                
+                <ul class="preview-itinerary-list" id="previewList">
+                    <li>Private sunrise tour of the Taj Mahal with historian</li>
+                    <li>Exclusive access to Amber Palace royal chambers</li>
+                    <li>Sunset camel safari in Jaisalmer with private banquet</li>
+                    <li>Chauffeured luxury SUV with dedicated concierge</li>
+                </ul>
+
+                <div class="price-row">
+                    <div>
+                        <div class="price-label">Estimated Investment</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Per person • All-Inclusive Luxury</div>
+                    </div>
+                    <div class="price-val" id="previewPrice">₹1,45,000</div>
+                </div>
+
+                <a href="#" id="plannerInquireBtn" target="_blank" class="btn-gold" style="width: 100%; justify-content: center; text-decoration: none; padding: 16px;">
+                    <span>Book via VIP Concierge</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PILLARS OF SOVEREIGN TRAVEL -->
+<section style="background: var(--bg-void);">
+    <div class="section-header reveal">
+        <span class="section-tag">The Standard of Excellence</span>
+        <h2 class="section-title">The Sovereign Difference</h2>
+        <p class="section-desc">Why high-net-worth travelers, cultural enthusiasts, and global visionaries trust TravelBharat for their expeditions.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1300px; margin: 0 auto;">
+        <div class="glass-card reveal" style="padding: 35px; border-radius: var(--radius-lg);">
+            <div style="font-size: 2.2rem; margin-bottom: 1.2rem; color: var(--gold-accent);">🏛️</div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-pure); margin-bottom: 10px;">Private Historical Access</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.7;">Skip lines and unlock private courtyards, historical archives, and secluded temples with renowned cultural scholars.</p>
+        </div>
+
+        <div class="glass-card reveal" style="padding: 35px; border-radius: var(--radius-lg);">
+            <div style="font-size: 2.2rem; margin-bottom: 1.2rem; color: var(--gold-accent);">🛡️</div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-pure); margin-bottom: 10px;">Dedicated Personal Butler</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.7;">From luggage forwarding and dietary perfection to 24/7 route security, your travel concierge handles every microscopic detail.</p>
+        </div>
+
+        <div class="glass-card reveal" style="padding: 35px; border-radius: var(--radius-lg);">
+            <div style="font-size: 2.2rem; margin-bottom: 1.2rem; color: var(--gold-accent);">👑</div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-pure); margin-bottom: 10px;">Living Royal Legacies</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.7;">Dine with local royal custodians in Udaipur and Jaipur, savor recipes passed down for 14 generations.</p>
+        </div>
+
+        <div class="glass-card reveal" style="padding: 35px; border-radius: var(--radius-lg);">
+            <div style="font-size: 2.2rem; margin-bottom: 1.2rem; color: var(--gold-accent);">✈️</div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-pure); margin-bottom: 10px;">Seamless Aviation & Transit</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.7;">Charter helicopters directly to remote Himalayan shrines or board luxury bullet-proof vehicles on demand.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS / JOURNALS -->
+<section id="reviews" style="background: radial-gradient(circle at 50% 50%, rgba(16, 25, 46, 0.4) 0%, var(--bg-void) 100%);">
+    <div class="section-header reveal">
+        <span class="section-tag">Traveler Journals</span>
+        <h2 class="section-title">Voices of Distinction</h2>
+        <p class="section-desc">Read reflections from global leaders, artists, and families who discovered India through our curated voyages.</p>
+    </div>
+
+    <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+            <div>
+                <div class="quote-stars">★★★★★</div>
+                <p class="quote-text">"Witnessing the sunrise over the Taj Mahal in total tranquility before public hours was transcendent. TravelBharat operates on a level of sophistication I have rarely encountered anywhere in the world."</p>
+            </div>
+            <div class="author-meta">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gold-grad); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--bg-void);">SC</div>
+                <div class="author-info">
+                    <h4>Sir Charles Montgomery</h4>
+                    <p>London, UK • Rajasthan & Agra Grand Tour</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+            <div>
+                <div class="quote-stars">★★★★★</div>
+                <p class="quote-text">"Our family expedition to Spiti Valley and Ladakh was executed with surgical precision. The luxury heated dome tents, personal oxygen support, and private monastery blessings left us in awe."</p>
+            </div>
+            <div class="author-meta">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gold-grad); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--bg-void);">AD</div>
+                <div class="author-info">
+                    <h4>Dr. Anya Deshmukh</h4>
+                    <p>Geneva, Switzerland • High Himalayan Odyssey</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+            <div>
+                <div class="quote-stars">★★★★★</div>
+                <p class="quote-text">"The private houseboat in Alleppey and the evening Ganga Aarti in Varanasi were spiritual reboots for our souls. Every meal, every chauffeur, and every guide felt handpicked for royalty."</p>
+            </div>
+            <div class="author-meta">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gold-grad); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--bg-void);">RK</div>
+                <div class="author-info">
+                    <h4>Rajiv Kapoor</h4>
+                    <p>Singapore • Spiritual & Kerala Sanctuary</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DESTINATION QUICK VIEW MODAL -->
+<div class="modal-backdrop" id="quickModal" onclick="closeQuickModal(event)">
+    <div class="modal-container" id="modalContainer" onclick="event.stopPropagation()">
+        <button class="modal-close-btn" onclick="closeQuickModal()">&times;</button>
+        <img src="" id="modalImg" alt="Destination Preview" class="modal-hero-img">
+        <div class="modal-body">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span class="gold-badge" id="modalCategory">Heritage</span>
+                <span style="color: var(--gold-primary); font-weight: 700; font-size: 0.9rem;" id="modalRating">★ 4.98</span>
+            </div>
+            <h2 id="modalTitle" style="font-family: var(--font-heading); font-size: 2.2rem; color: var(--text-pure); margin-bottom: 6px;">Title</h2>
+            <p id="modalLocation" style="color: var(--gold-accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 20px;">Location</p>
+            <p id="modalDesc" style="color: var(--text-secondary); line-height: 1.8; font-size: 1rem; margin-bottom: 25px;">Description text...</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+                <div style="background: rgba(255,255,255,0.04); padding: 15px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Prime Season</div>
+                    <div id="modalSeason" style="font-weight: 700; color: var(--text-pure); font-size: 0.95rem; margin-top: 4px;">Oct - Mar</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); padding: 15px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Curator Assessment</div>
+                    <div style="font-weight: 700; color: var(--emerald-regal); font-size: 0.95rem; margin-top: 4px;">Top 1% Luxury Asset</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <a href="#" id="modalDeepLink" class="btn-gold" style="flex: 1; text-align: center; justify-content: center; text-decoration: none;">Explore Detailed Guide →</a>
+                <a href="#" id="modalWaLink" target="_blank" class="btn-outline" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                    <span>💬 Inquire on WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MASTER FOOTER -->
 <footer class="main-footer" id="about">
     <div class="footer-grid">
         <div class="footer-brand">
-            <h1 class="logo" style="color: white; margin-bottom: 1.5rem;">Travel<b>Bharat</b></h1>
-            <p>Your premier gateway to exploring the soul of India. From the snow-capped Himalayas to the tropical backwaters of Kerala, we curate the finest experiences for the modern traveler.</p>
+            <a href="#hero" class="logo-container" style="margin-bottom: 1.2rem;">
+                <div class="logo-crest">
+                    <span>भ</span>
+                </div>
+                <span class="logo-text">Travel<b>Bharat</b></span>
+            </a>
+            <p>TravelBharat Elite is India's premier bespoke luxury travel and cultural curation concierge. We design sovereign journeys across 28 states, honoring five millennia of architectural and spiritual mastery.</p>
         </div>
 
         <div>
-            <h4 class="footer-title">Quick Links</h4>
+            <h4 class="footer-title">Navigation</h4>
             <ul class="footer-links">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#states">Explore States</a></li>
-                <li><a href="#destinations">Popular Places</a></li>
-                <li><a href="#about">About Us</a></li>
+                <li><a href="#hero">Grand Hero</a></li>
+                <li><a href="#states">Regional Portals</a></li>
+                <li><a href="#destinations">Curated Escapes</a></li>
+                <li><a href="#planner">Bespoke Planner</a></li>
+                <li><a href="admin.html">Curator Dashboard</a></li>
             </ul>
         </div>
 
         <div>
-            <h4 class="footer-title">Support</h4>
+            <h4 class="footer-title">Elite Services</h4>
             <ul class="footer-links">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">Travel Advisory</a></li>
-                <li><a href="#">Contact Support</a></li>
+                <li><a href="#planner">Private Aviation Charter</a></li>
+                <li><a href="#planner">Palace Buyout Services</a></li>
+                <li><a href="#planner">Spiritual Char Dham Flights</a></li>
+                <li><a href="#planner">VIP Wildlife Expeditions</a></li>
+                <li><a href="#planner">Diplomatic Protocol Security</a></li>
             </ul>
         </div>
 
-        <div>
-            <h4 class="footer-title">About Us</h4>
-            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.8;">
-                We are your ultimate all-in-one travel companion. We provide everything you need in one single place, helping people effortlessly discover, plan, and journey anywhere across the incredible landscapes of India.
-            </p>
+        <div class="footer-newsletter-col">
+            <h4 class="footer-title">The Sovereign Gazette</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Subscribe to receive secret destination unveilings, private palace invitations, and seasonal cultural insights.</p>
+            <form class="newsletter-box" onsubmit="handleNewsletter(event)">
+                <input type="email" placeholder="Enter your private email" class="newsletter-input" required id="newsEmail">
+                <button type="submit" class="btn-gold" style="padding: 10px 22px; font-size: 0.8rem;">Join</button>
+            </form>
         </div>
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 TravelBharat Elite. All rights reserved. Crafted for excellence.</p>
+        <p>© 2026 TravelBharat Elite. Handcrafted for Sovereign Excellence. All Rights Reserved.</p>
         <div class="social-links">
-            <a href="#">FB</a>
-            <a href="#">TW</a>
-            <a href="#">IG</a>
-            <a href="#">IN</a>
+            <a href="#" class="social-link" title="Instagram">IG</a>
+            <a href="#" class="social-link" title="X / Twitter">TW</a>
+            <a href="#" class="social-link" title="LinkedIn">IN</a>
+            <a href="#" class="social-link" title="YouTube">YT</a>
         </div>
     </div>
 </footer>
 
-<script src="config.js"></script>
-<script src="script.js?v=2"></script>
-<script>
-    // Handle Navbar scroll effect
-    window.addEventListener('scroll', () => {
-        const nav = document.querySelector('.navbar');
-        if (window.scrollY > 50) nav.classList.add('scrolled');
-        else nav.classList.remove('scrolled');
-    });
-</script>
-<!-- WHATSAPP FLOATING BUTTON -->
-<a href="https://wa.me/7489771078" target="_blank" class="whatsapp-float" aria-label="Contact us on WhatsApp">
-    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="white">
+<!-- FLOATING VIP CONCIERGE -->
+<a href="https://wa.me/917489771078?text=Hello TravelBharat Elite Concierge! I wish to inquire about curating a private bespoke journey." 
+   target="_blank" 
+   class="whatsapp-float" 
+   aria-label="Contact VIP Concierge on WhatsApp">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white">
         <path d="M16.035 2.143c-7.66 0-13.89 6.23-13.89 13.89 0 2.45.645 4.84 1.867 6.945L2.14 29.856l7.042-1.848c2.03.11 4.343 1.764 6.852 1.764 7.66 0 13.89-6.23 13.89-13.89 0-7.66-6.23-13.89-13.89-13.89zM16.035 27.464c-2.227 0-4.412-.584-6.33-1.688l-.454-.268-4.708 1.236 1.254-4.588-.295-.47c-1.222-1.956-1.866-4.228-1.866-6.57 0-6.732 5.48-12.214 12.214-12.214s12.214 5.482 12.214 12.214-5.48 12.214-12.214 12.214zm6.703-9.172c-.368-.184-2.176-1.074-2.513-1.196-.338-.124-.583-.184-.828.184s-.95 1.196-1.166 1.44c-.214.246-.43.276-.797.092-.368-.184-1.554-.572-2.96-1.826-1.094-1.026-1.834-2.29-2.048-2.66-.214-.368-.023-.566.16-.75.166-.164.368-.43.552-.644.184-.215.246-.368.368-.614.123-.245.06-.46-.03-.644-.093-.184-.828-1.995-1.135-2.73-.3-.72-.605-.623-.828-.635-.214-.012-.46-.012-.705-.012-.246 0-.645.092-.982.46s-1.288 1.258-1.288 3.068 1.32 3.558 1.503 3.804c.184.246 2.593 3.956 6.277 5.546.877.38 1.562.607 2.096.777.88.28 1.68.24 2.316.146.71-.106 2.176-.89 2.483-1.75.307-.86.307-1.595.215-1.75-.093-.154-.338-.246-.706-.43z"/>
     </svg>
 </a>
 
+<!-- BACK TO TOP BUTTON -->
+<button id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<!-- CORE APPLICATION LOGIC -->
+<script src="config.js"></script>
+<script src="data.js?v=3"></script>
+<script src="script.js?v=3"></script>
 </body>
 </html>
