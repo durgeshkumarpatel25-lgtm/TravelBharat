@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curated Destination Insights | TravelBharat Elite</title>
+    <meta name="description" content="Discover in-depth cultural narratives, prime seasonal windows, and bespoke private tours for India's finest heritage destinations.">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: var(--bg-void);">
+
+<!-- NAVBAR -->
+<header class="navbar scrolled" id="navbar">
+    <a href="index.html#hero" class="logo-container">
+        <div class="logo-crest">
+            <span>भ</span>
+        </div>
+        <div>
+            <span class="logo-text">Travel<b>Bharat</b></span>
+            <span class="logo-tagline">Elite Concierge • Estd. 2026</span>
+        </div>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#hero">Home</a></li>
+        <li><a href="index.html#states">States</a></li>
+        <li><a href="index.html#destinations" class="active">Destinations</a></li>
+        <li><a href="index.html#planner">Bespoke Planner</a></li>
+        <li><a href="index.html#about">About</a></li>
+    </ul>
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html#destinations" class="btn-outline" style="text-decoration: none;">← All Escapes</a>
+        <a href="https://wa.me/917489771078?text=Hello TravelBharat! I wish to book an elite experience." target="_blank" class="btn-gold" style="text-decoration: none;">
+            <span>VIP Booking</span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+    </div>
+</header>
+
+<!-- CINEMATIC CONTENT WRAPPER -->
+<div id="placeDetails">
+    <!-- Populated dynamically via place.js -->
+</div>
+
+<!-- FOOTER -->
+<footer class="main-footer" id="about">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo-container" style="margin-bottom: 1.2rem;">
+                <div class="logo-crest">
+                    <span>भ</span>
+                </div>
+                <span class="logo-text">Travel<b>Bharat</b></span>
+            </a>
+            <p>Your premier gateway to exploring the soul of India. From the snow-capped Himalayas to the tropical backwaters of Kerala, we curate the finest experiences for the modern traveler.</p>
+        </div>
+
+        <div>
+            <h4 class="footer-title">Quick Navigation</h4>
+            <ul class="footer-links">
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#states">Explore States</a></li>
+                <li><a href="index.html#destinations">Popular Places</a></li>
+                <li><a href="index.html#planner">Bespoke Planner</a></li>
+                <li><a href="admin.html">Curator Portal</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="footer-title">Support & Concierge</h4>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Protocol</a></li>
+                <li><a href="#">Terms of Sovereignty</a></li>
+                <li><a href="#">VIP Travel Advisory</a></li>
+                <li><a href="https://wa.me/917489771078">24/7 Concierge Desk</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-newsletter-col">
+            <h4 class="footer-title">Join The Sovereign Gazette</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Subscribe to receive elite travel guides, private palace access, and hidden gem alerts.</p>
+            <form class="newsletter-box" onsubmit="event.preventDefault(); alert('✨ Welcome to The Sovereign Gazette!');">
+                <input type="email" placeholder="Your Private Email" class="newsletter-input" required>
+                <button type="submit" class="btn-gold" style="padding: 10px 22px; font-size: 0.8rem;">Join</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 TravelBharat Elite. All rights reserved. Handcrafted for Sovereign Excellence.</p>
+        <div class="social-links">
+            <a href="#" class="social-link">IG</a>
+            <a href="#" class="social-link">TW</a>
+            <a href="#" class="social-link">IN</a>
+            <a href="#" class="social-link">YT</a>
+        </div>
+    </div>
+</footer>
+
+<!-- FLOATING VIP CONCIERGE -->
+<a href="https://wa.me/917489771078?text=Hello TravelBharat Elite! I am viewing a destination and would love personal concierge assistance." 
+   target="_blank" 
+   class="whatsapp-float" 
+   aria-label="WhatsApp Concierge">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white">
+        <path d="M16.035 2.143c-7.66 0-13.89 6.23-13.89 13.89 0 2.45.645 4.84 1.867 6.945L2.14 29.856l7.042-1.848c2.03.11 4.343 1.764 6.852 1.764 7.66 0 13.89-6.23 13.89-13.89 0-7.66-6.23-13.89-13.89-13.89zM16.035 27.464c-2.227 0-4.412-.584-6.33-1.688l-.454-.268-4.708 1.236 1.254-4.588-.295-.47c-1.222-1.956-1.866-4.228-1.866-6.57 0-6.732 5.48-12.214 12.214-12.214s12.214 5.482 12.214 12.214-5.48 12.214-12.214 12.214zm6.703-9.172c-.368-.184-2.176-1.074-2.513-1.196-.338-.124-.583-.184-.828.184s-.95 1.196-1.166 1.44c-.214.246-.43.276-.797.092-.368-.184-1.554-.572-2.96-1.826-1.094-1.026-1.834-2.29-2.048-2.66-.214-.368-.023-.566.16-.75.166-.164.368-.43.552-.644.184-.215.246-.368.368-.614.123-.245.06-.46-.03-.644-.093-.184-.828-1.995-1.135-2.73-.3-.72-.605-.623-.828-.635-.214-.012-.46-.012-.705-.012-.246 0-.645.092-.982.46s-1.288 1.258-1.288 3.068 1.32 3.558 1.503 3.804c.184.246 2.593 3.956 6.277 5.546.877.38 1.562.607 2.096.777.88.28 1.68.24 2.316.146.71-.106 2.176-.89 2.483-1.75.307-.86.307-1.595.215-1.75-.093-.154-.338-.246-.706-.43z"/>
+    </svg>
+</a>
+
+<script src="config.js"></script>
+<script src="data.js?v=3"></script>
+<script src="place.js?v=3"></script>
+</body>
+</html>

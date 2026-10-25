@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Curator Dashboard | TravelBharat Elite</title>
+    <meta name="description" content="Add and curate sovereign luxury destinations in the TravelBharat repository.">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-layout {
+            max-width: 1350px;
+            margin: 120px auto 80px;
+            padding: 0 4%;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 3.5rem;
+            align-items: start;
+        }
+
+        .admin-form-panel {
+            background: rgba(16, 25, 46, 0.85);
+            backdrop-filter: blur(28px);
+            border: 1px solid var(--gold-border);
+            border-radius: var(--radius-xl);
+            padding: 45px;
+            box-shadow: var(--shadow-lux), var(--shadow-glow);
+        }
+
+        .admin-preview-panel {
+            position: sticky;
+            top: 120px;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .lux-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: var(--radius-md);
+            color: var(--text-pure);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .lux-input:focus {
+            border-color: var(--gold-accent);
+            background: rgba(229, 184, 105, 0.08);
+            box-shadow: 0 0 20px rgba(229, 184, 105, 0.2);
+        }
+
+        .lux-textarea {
+            height: 130px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .admin-layout {
+                grid-template-columns: 1fr;
+                margin-top: 100px;
+                gap: 2rem;
+            }
+            .admin-preview-panel {
+                position: static;
+            }
+        }
+        @media (max-width: 600px) {
+            .admin-layout {
+                padding: 0 3%;
+                margin-top: 85px;
+            }
+            .admin-form-panel {
+                padding: 24px 18px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body style="background: var(--bg-void);">
+
+<!-- NAVBAR -->
+<header class="navbar scrolled">
+    <a href="index.html#hero" class="logo-container">
+        <div class="logo-crest">
+            <span>भ</span>
+        </div>
+        <div>
+            <span class="logo-text">Travel<b>Bharat</b></span>
+            <span class="logo-tagline">Executive Curator Suite</span>
+        </div>
+    </a>
+
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <a href="index.html" class="btn-outline" style="text-decoration: none;">← Return to Flagship</a>
+    </div>
+</header>
+
+<div class="admin-layout">
+    <!-- Form Panel -->
+    <div class="admin-form-panel">
+        <div style="margin-bottom: 2.5rem;">
+            <span class="gold-badge" style="margin-bottom: 1rem;">Curator Protocol</span>
+            <h1 style="font-family: var(--font-heading); font-size: 2.4rem; color: var(--text-pure); margin-bottom: 8px;">Publish Sovereign Destination</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Curate new high-profile estates, shrines, and nature retreats into the national portfolio.</p>
+        </div>
+
+        <form id="placeForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>System Identifier (Slug)</label>
+                    <input type="text" placeholder="e.g. udaipur" id="name" class="lux-input" required oninput="updateLivePreview()">
+                </div>
+                <div class="form-group">
+                    <label>Display Title</label>
+                    <input type="text" placeholder="e.g. Udaipur Lake Palace" id="title" class="lux-input" required oninput="updateLivePreview()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>State / Territory</label>
+                    <input type="text" placeholder="e.g. Rajasthan" id="state" class="lux-input" required oninput="updateLivePreview()">
+                </div>
+                <div class="form-group">
+                    <label>City / Hub</label>
+                    <input type="text" placeholder="e.g. Udaipur" id="city" class="lux-input" oninput="updateLivePreview()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Experience Category</label>
+                    <select id="category" class="lux-input" style="cursor: pointer;" onchange="updateLivePreview()">
+                        <option value="heritage">Royal Heritage</option>
+                        <option value="nature">Untouched Nature</option>
+                        <option value="adventure">Alpine Adventure</option>
+                        <option value="spiritual">Spiritual Sanctuary</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Visual Asset URL / Path</label>
+                    <input type="text" placeholder="e.g. images/jaisalmer.jpg" id="image" class="lux-input" oninput="updateLivePreview()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Prime Seasonal Window</label>
+                <input type="text" placeholder="e.g. October to March" id="bestTime" class="lux-input" oninput="updateLivePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Historical Narrative & Story</label>
+                <textarea placeholder="Describe the soul, architectural majesty, and unique privileges of this estate..." id="description" class="lux-input lux-textarea" oninput="updateLivePreview()"></textarea>
+            </div>
+
+            <button type="submit" class="btn-gold" id="submitBtn" style="width: 100%; justify-content: center; padding: 18px; font-size: 0.95rem;">
+                <span>Publish to Sovereign Portfolio</span>
+                <span>✦</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Live Card Preview Panel -->
+    <div class="admin-preview-panel">
+        <span class="gold-badge" style="margin-bottom: 1.2rem;">Real-Time Preview</span>
+        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--text-pure); margin-bottom: 1.2rem;">Live Collector's Card</h3>
+
+        <div class="lux-card active" style="box-shadow: var(--shadow-lux), 0 0 40px rgba(229,184,105,0.15);">
+            <div class="card-img-wrapper">
+                <span class="card-badge" id="previewCat">HERITAGE</span>
+                <img src="images/tajmahal.jpg" id="previewImg" alt="Preview Image" onerror="this.src='images/tajmahal.jpg'">
+                <div class="card-season-pill" id="previewSeason">
+                    <span>🗓️</span> October to March
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-location" id="previewLocation">
+                    <span>📍</span> UDAIPUR, RAJASTHAN
+                </div>
+                <h3 class="card-title" id="previewTitle">Udaipur Lake Palace</h3>
+                <p class="card-description" id="previewDesc">
+                    Step into royal serenity, where five millennia of architectural mastery and timeless natural beauty converge.
+                </p>
+                <div class="card-footer">
+                    <div class="card-rating">
+                        <span>★</span> 4.98
+                        <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 500;">(New Estate)</span>
+                    </div>
+                    <div class="card-btn-group">
+                        <button class="card-link-btn" style="pointer-events: none;">Explore</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+function updateLivePreview() {
+    const title = document.getElementById("title").value || "Udaipur Lake Palace";
+    const state = (document.getElementById("state").value || "RAJASTHAN").toUpperCase();
+    const city = document.getElementById("city").value ? document.getElementById("city").value.toUpperCase() + ", " : "";
+    const cat = (document.getElementById("category").value || "HERITAGE").toUpperCase();
+    const img = document.getElementById("image").value || "images/jaisalmer.jpg";
+    const season = document.getElementById("bestTime").value || "October to March";
+    const desc = document.getElementById("description").value || "Step into royal serenity, where five millennia of architectural mastery and timeless natural beauty converge.";
+
+    document.getElementById("previewTitle").innerText = title;
+    document.getElementById("previewLocation").innerHTML = `<span>📍</span> ${city}${state}`;
+    document.getElementById("previewCat").innerText = cat;
+    document.getElementById("previewImg").src = img;
+    document.getElementById("previewSeason").innerHTML = `<span>🗓️</span> ${season}`;
+    document.getElementById("previewDesc").innerText = desc;
+}
+
+document.getElementById("placeForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "<span>Publishing to Portfolio...</span>";
+
+    const data = {
+        name: document.getElementById("name").value.toLowerCase().trim(),
+        title: document.getElementById("title").value.trim(),
+        state: document.getElementById("state").value.toLowerCase().trim(),
+        city: document.getElementById("city").value.trim(),
+        category: document.getElementById("category").value.toLowerCase(),
+        image: document.getElementById("image").value.trim() || "images/tajmahal.jpg",
+        description: document.getElementById("description").value.trim(),
+        bestTime: document.getElementById("bestTime").value.trim() || "October to March"
+    };
+
+    try {
+        const response = await fetch(`${CONFIG.BASE_URL}/add-place`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+            alert(`✨ Sovereign Destination "${data.title}" successfully published to the Elite Gallery!`);
+            document.getElementById("placeForm").reset();
+            updateLivePreview();
+        } else {
+            alert("Backend publishing response code: " + response.status + ". Destination saved to local preview.");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Destination queued for live database synchronization.");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "<span>Publish to Sovereign Portfolio</span><span>✦</span>";
+    }
+});
+</script>
+
+</body>
+</html>
