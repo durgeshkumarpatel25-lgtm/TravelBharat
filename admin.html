@@ -221,13 +221,36 @@
 </div>
 
 <script src="config.js"></script>
+<script src="data.js?v=5"></script>
 <script>
+function normalizeImagePath(raw, fallbackObj) {
+    let img = (raw || "").trim();
+    if (img.toLowerCase().startsWith("images/")) {
+        img = "images/" + img.slice(7);
+    } else if (img.toLowerCase().startsWith("/images/")) {
+        img = "images/" + img.slice(8);
+    }
+    if (img.toLowerCase() === "images/pachmarhi.jpg") {
+        img = "images/pachmarhi.JPG";
+    }
+    if (!img && typeof getPlaceImage === "function" && fallbackObj) {
+        img = getPlaceImage(fallbackObj);
+    }
+    return img || "images/jaisalmer.jpg";
+}
+
 function updateLivePreview() {
     const title = document.getElementById("title").value || "Udaipur Lake Palace";
     const state = (document.getElementById("state").value || "RAJASTHAN").toUpperCase();
     const city = document.getElementById("city").value ? document.getElementById("city").value.toUpperCase() + ", " : "";
     const cat = (document.getElementById("category").value || "HERITAGE").toUpperCase();
-    const img = document.getElementById("image").value || "images/jaisalmer.jpg";
+    const rawImg = document.getElementById("image").value;
+    const img = normalizeImagePath(rawImg, {
+        name: document.getElementById("name").value,
+        title: title,
+        state: state,
+        category: cat
+    });
     const season = document.getElementById("bestTime").value || "October to March";
     const desc = document.getElementById("description").value || "Step into royal serenity, where five millennia of architectural mastery and timeless natural beauty converge.";
 
@@ -245,13 +268,19 @@ document.getElementById("placeForm").addEventListener("submit", async function(e
     submitBtn.disabled = true;
     submitBtn.innerHTML = "<span>Publishing to Portfolio...</span>";
 
+    const name = document.getElementById("name").value.toLowerCase().trim();
+    const title = document.getElementById("title").value.trim();
+    const state = document.getElementById("state").value.toLowerCase().trim();
+    const category = document.getElementById("category").value.toLowerCase();
+    const rawImage = document.getElementById("image").value.trim();
+
     const data = {
-        name: document.getElementById("name").value.toLowerCase().trim(),
-        title: document.getElementById("title").value.trim(),
-        state: document.getElementById("state").value.toLowerCase().trim(),
+        name: name,
+        title: title,
+        state: state,
         city: document.getElementById("city").value.trim(),
-        category: document.getElementById("category").value.toLowerCase(),
-        image: document.getElementById("image").value.trim() || "images/tajmahal.jpg",
+        category: category,
+        image: normalizeImagePath(rawImage, { name, title, state, category }),
         description: document.getElementById("description").value.trim(),
         bestTime: document.getElementById("bestTime").value.trim() || "October to March"
     };

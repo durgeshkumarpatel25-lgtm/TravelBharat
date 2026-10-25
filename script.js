@@ -129,10 +129,10 @@ function renderPlaces(data) {
                         aria-label="Wishlist">
                     ${isWishlisted ? '♥' : '♡'}
                 </button>
-                <img src="${place.image || 'images/default.jpg'}" 
+                <img src="${(typeof getPlaceImage === 'function') ? getPlaceImage(place) : (place.image || 'images/default.jpg')}" 
                      alt="${title}"
                      loading="lazy"
-                     onerror="this.onerror=null; this.src='images/tajmahal.jpg';">
+                     onerror="this.onerror=null; this.src=(typeof getPlaceImage === 'function') ? getPlaceImage({state: '${place.state || ''}', category: '${place.category || ''}'}) : 'images/jaisalmer.jpg';">
                 <div class="card-season-pill">
                     <span>🗓️</span> ${bestTime}
                 </div>
@@ -428,7 +428,7 @@ function openQuickModal(placeName) {
     const stateStr = (place.state || "India").toUpperCase();
     const cityStr = place.city ? `${place.city}, ` : "";
 
-    img.src = place.image || "images/tajmahal.jpg";
+    img.src = (typeof getPlaceImage === 'function') ? getPlaceImage(place) : (place.image || "images/jaisalmer.jpg");
     title.innerText = capitalizedTitle;
     loc.innerText = `📍 ${cityStr}${stateStr}`;
     cat.innerText = (place.category || "Luxury Heritage").toUpperCase();

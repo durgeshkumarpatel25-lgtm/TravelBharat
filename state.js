@@ -279,10 +279,10 @@ function renderDestinationCards(placesList) {
         card.innerHTML = `
             <div class="card-img-wrapper">
                 <span class="card-badge">${category}</span>
-                <img src="${place.image || 'images/default.jpg'}" 
+                <img src="${(typeof getPlaceImage === 'function') ? getPlaceImage(place) : (place.image || 'images/default.jpg')}" 
                      alt="${title}"
                      loading="lazy"
-                     onerror="this.onerror=null; this.src='images/tajmahal.jpg';">
+                     onerror="this.onerror=null; this.src=(typeof getPlaceImage === 'function') ? getPlaceImage({state: '${place.state || ''}', category: '${place.category || ''}'}) : 'images/jaisalmer.jpg';">
                 <div class="card-season-pill">
                     <span>🗓️</span> ${bestTime}
                 </div>

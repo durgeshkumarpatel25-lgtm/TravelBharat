@@ -450,10 +450,252 @@ const INITIAL_PLACES = [
         "description": "Nestled in the lush Tibetan settlement hills of Mainpat, Chhattisgarh. Ulta Pani is an astonishing optical and gravitational anomaly where stream water appears to flow smoothly uphill.",
         "bestTime": "July to February",
         "featured": false
+    },
+    {
+        "_id": "6addb357dc6f6650d0eb72a9",
+        "name": "sirpur-heritage-complex",
+        "title": "Sirpur Heritage Complex",
+        "state": "chhattisgarh",
+        "city": "Sirpur",
+        "category": "heritage",
+        "image": "images/sirpur-lakshman-temple.jpg",
+        "rating": 4.93,
+        "reviews": 3200,
+        "description": "Sirpur, situated on the banks of the Mahanadi River in Chhattisgarh's Mahasamund district, is an important archaeological destination renowned for its ancient temples, Buddhist heritage and historic settlement remains with the iconic 7th-century brick Lakshman Temple.",
+        "bestTime": "October to March",
+        "featured": false
+    },
+    {
+        "_id": "6addcacc0b7a7c19fa0212fb",
+        "name": "mainpat-hill-station",
+        "title": "Mainpat Hill Station",
+        "state": "chhattisgarh",
+        "city": "Mainpat",
+        "category": "nature",
+        "image": "images/mainpat-tiger-point-hills.jpg",
+        "rating": 4.91,
+        "reviews": 2900,
+        "description": "Mainpat is a scenic highland destination in northern Chhattisgarh, popularly known as the Shimla of Surguja. Discover rolling green meadows, Tiger Point waterfalls, Buddhist monasteries, and the mysterious bouncing ground of Jaljali.",
+        "bestTime": "October to March",
+        "featured": false
+    },
+    {
+        "_id": "6addccbe4c525766a3eaea14",
+        "name": "barnawapara-wildlife-sanctuary",
+        "title": "Barnawapara Wildlife Sanctuary",
+        "state": "chhattisgarh",
+        "city": "Barnawapara",
+        "category": "nature",
+        "image": "images/barnawapara-wildlife-sanctuary.jpg",
+        "rating": 4.92,
+        "reviews": 3400,
+        "description": "Barnawapara Wildlife Sanctuary is a pristine teak forest sanctuary in Chhattisgarh teeming with wildlife, leopards, sambar deer, flying squirrels, and over 150 species of birds across lush canopy trails.",
+        "bestTime": "November to April",
+        "featured": false
+    },
+    {
+        "_id": "6addcef64c525766a3eaea17",
+        "name": "bhoramdeo-temple-kawardha",
+        "title": "Bhoramdeo Temple",
+        "state": "chhattisgarh",
+        "city": "Kawardha",
+        "category": "spiritual",
+        "image": "images/bhoramdeo-temple-kawardha.jpg",
+        "rating": 4.94,
+        "reviews": 4100,
+        "description": "Bhoramdeo Temple, celebrated as the Khajuraho of Chhattisgarh, is an 11th-century Nagara-style stone architectural marvel nestled amidst the tranquil Maikal mountain range in Kawardha.",
+        "bestTime": "October to March",
+        "featured": false
+    },
+    {
+        "_id": "6addd13e4c525766a3eaea18",
+        "name": "maa-bamleshwari-temple-dongargarh",
+        "title": "Maa Bamleshwari Temple",
+        "state": "chhattisgarh",
+        "city": "Dongargarh",
+        "category": "spiritual",
+        "image": "images/maa-bamleshwari-temple-dongargarh.jpg",
+        "rating": 4.96,
+        "reviews": 5200,
+        "description": "Perched atop a 1,600-foot majestic hill in Dongargarh, Chhattisgarh. Maa Bamleshwari Temple is a celebrated spiritual beacon offering 360-degree panoramic vista views, scenic ropeway ascents, and centuries of revered Shakti devotion.",
+        "bestTime": "October to March",
+        "featured": false
     }
 ];
 
-// In-memory data store
+// ============================================================
+// IMAGE MAP: Complete directory mapping place names & slugs
+// to their unique local asset paths. Fixes Vercel/Linux case sensitivity
+// and ensures NO two places display duplicate images.
+// ============================================================
+const PLACE_IMAGE_MAP = {
+    // 1. Classical Destinations
+    "tajmahal":                          "images/tajmahal.jpg",
+    "tajmahalagra":                      "images/tajmahal.jpg",
+    "kedarnath":                         "images/kedarnath.jpg",
+    "kedarnathtemple":                   "images/kedarnath.jpg",
+    "ladakh":                            "images/ladakh.jpg",
+    "ladakhmountains":                   "images/ladakh.jpg",
+    "kerala":                            "images/kerala.jpg",
+    "keralabackwaters":                  "images/kerala.jpg",
+    "jaisalmer":                         "images/jaisalmer.jpg",
+    "jaisalmerfort":                     "images/jaisalmer.jpg",
+    "varanasi":                          "images/varanasi.jpg",
+    "varanasighats":                     "images/varanasi.jpg",
+    "spiti":                             "images/spiti.jpg",
+    "spitivalley":                       "images/spiti.jpg",
+    "jaipur":                            "images/jaipur.jpg",
+    "jaipurcity":                        "images/jaipur.jpg",
+    "jaipurroyalcity":                   "images/jaipur.jpg",
+    "manali":                            "images/manali.jpg",
+    "manalipeaks":                       "images/manali.jpg",
+    "kanha":                             "images/kanha.jpg",
+    "kanhanationalpark":                 "images/kanha.jpg",
+    "goa":                               "images/goa.jpg",
+    "goabeaches":                        "images/goa.jpg",
+    "goacoastalhaven":                   "images/goa.jpg",
+    "meghalaya":                         "images/meghalaya.jpg",
+    "meghalayahills":                    "images/meghalaya.jpg",
+    "meghalayalivingbridges":            "images/meghalaya.jpg",
+    "rishikesh":                         "images/rishikesh.jpg",
+    "rishikeshgangaghats":               "images/rishikesh.jpg",
+    "rishikeshyogacapital":              "images/rishikesh.jpg",
+    "badrinath":                         "images/badrinath.jpg",
+    "badrinathtemple":                   "images/badrinath.jpg",
+    "vaishnodevi":                       "images/vaishnodevi.jpg",
+    "vaishnodevitemple":                 "images/vaishnodevi.jpg",
+    "vaishnodevishrine":                 "images/vaishnodevi.jpg",
+    "khajuraho":                         "images/khajuraho.jpg",
+    "khajurahotemple":                   "images/khajuraho.jpg",
+    "khajurahotemplegroup":              "images/khajuraho.jpg",
+    "pachmarhi":                         "images/pachmarhi.JPG",
+    "pachmarhihillstation":              "images/pachmarhi.JPG",
+    "pachmarhihillsanctuary":            "images/pachmarhi.JPG",
+    "puri":                              "images/puri.jpg",
+    "puribeach":                         "images/puri.jpg",
+    "puribeachjagannath":                "images/puri.jpg",
+    
+    // 2. Chhattisgarh Destinations
+    "ultapani":                          "images/ulta pani.jpg",
+    "ultapanimagneticfalls":             "images/ulta pani.jpg",
+    "sirpurheritagecomplex":             "images/sirpur-lakshman-temple.jpg",
+    "sirpurlakshmantemple":              "images/sirpur-lakshman-temple.jpg",
+    "sirpur":                            "images/sirpur-lakshman-temple.jpg",
+    "lakshmantemple":                    "images/sirpur-lakshman-temple.jpg",
+    "mainpathillstation":                "images/mainpat-tiger-point-hills.jpg",
+    "mainpattigerpointhills":            "images/mainpat-tiger-point-hills.jpg",
+    "mainpat":                           "images/mainpat-tiger-point-hills.jpg",
+    "tigerpoint":                        "images/mainpat-tiger-point-hills.jpg",
+    "barnawaparawildlifesanctuary":      "images/barnawapara-wildlife-sanctuary.jpg",
+    "barnawapara":                       "images/barnawapara-wildlife-sanctuary.jpg",
+    "bhoramdeotemplekawardha":           "images/bhoramdeo-temple-kawardha.jpg",
+    "bhoramdeotemple":                   "images/bhoramdeo-temple-kawardha.jpg",
+    "bhoramdeo":                         "images/bhoramdeo-temple-kawardha.jpg",
+    "kawardha":                          "images/bhoramdeo-temple-kawardha.jpg",
+    "maabamleshwaritempledongargarh":    "images/maa-bamleshwari-temple-dongargarh.jpg",
+    "maabamleshwaritemple":              "images/maa-bamleshwari-temple-dongargarh.jpg",
+    "maabamleshwari":                    "images/maa-bamleshwari-temple-dongargarh.jpg",
+    "bamleshwari":                       "images/maa-bamleshwari-temple-dongargarh.jpg",
+    "dongargarh":                        "images/maa-bamleshwari-temple-dongargarh.jpg",
+
+    // 3. Other Regional Heritage Gems
+    "auli":                              "images/auli.jpg",
+    "bhedaghat":                         "images/bhedaghat.jpg",
+    "nikobar":                           "images/nikobar.jpg",
+    "qutubminar":                        "images/qutubminar.jpg",
+    "sanjayvan":                         "images/sanjayvan.jpg"
+};
+
+// Fallback images per State so missing images never collapse into the same photo
+const STATE_DEFAULT_IMAGES = {
+    "chhattisgarh":   "images/mainpat-tiger-point-hills.jpg",
+    "rajasthan":      "images/jaisalmer.jpg",
+    "kerala":         "images/kerala.jpg",
+    "goa":            "images/goa.jpg",
+    "himachalpradesh":"images/spiti.jpg",
+    "madhyapradesh":  "images/kanha.jpg",
+    "uttarpradesh":   "images/varanasi.jpg",
+    "uttarakhand":    "images/kedarnath.jpg",
+    "ladakh":         "images/ladakh.jpg",
+    "meghalaya":      "images/meghalaya.jpg",
+    "odisha":         "images/puri.jpg",
+    "jammukashmir":   "images/vaishnodevi.jpg"
+};
+
+function getPlaceImage(item, fallback) {
+    if (!item && !fallback) return "images/jaisalmer.jpg";
+
+    const clean = (str) => (str || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    const cleanName = clean(item?.name);
+    const cleanTitle = clean(item?.title);
+
+    // 1. Direct exact match in PLACE_IMAGE_MAP
+    if (cleanName && PLACE_IMAGE_MAP[cleanName]) return PLACE_IMAGE_MAP[cleanName];
+    if (cleanTitle && PLACE_IMAGE_MAP[cleanTitle]) return PLACE_IMAGE_MAP[cleanTitle];
+
+    // 2. Keyword/substring match in PLACE_IMAGE_MAP (e.g. "mainpat", "barnawapara", "sirpur")
+    for (const [key, imgPath] of Object.entries(PLACE_IMAGE_MAP)) {
+        if (key.length >= 5) {
+            if (cleanName && (cleanName.includes(key) || key.includes(cleanName))) {
+                return imgPath;
+            }
+            if (cleanTitle && (cleanTitle.includes(key) || key.includes(cleanTitle))) {
+                return imgPath;
+            }
+        }
+    }
+
+    // 3. Normalize item.image if valid (strictly enforce lowercase "images/" for Linux/Vercel)
+    let rawImg = (item?.image || "").trim();
+    if (rawImg) {
+        // Fix case of "Images/..." or "/images/..." -> "images/..."
+        if (rawImg.toLowerCase().startsWith("images/")) {
+            rawImg = "images/" + rawImg.slice(7);
+        } else if (rawImg.toLowerCase().startsWith("/images/")) {
+            rawImg = "images/" + rawImg.slice(8);
+        }
+
+        // Handle pachmarhi uppercase extension on Linux
+        if (rawImg.toLowerCase() === "images/pachmarhi.jpg") {
+            rawImg = "images/pachmarhi.JPG";
+        }
+
+        // If it starts with images/ and is a full file name
+        if (rawImg.startsWith("images/") && rawImg.length > 9) {
+            return rawImg;
+        }
+
+        // External URLs (e.g. Cloudinary, Unsplash, AWS S3)
+        if (rawImg.startsWith("http://") || rawImg.startsWith("https://")) {
+            return rawImg;
+        }
+    }
+
+    // 4. Check fallback from INITIAL_PLACES
+    if (fallback && fallback.image) {
+        let fb = fallback.image.trim();
+        if (fb.toLowerCase().startsWith("images/")) {
+            fb = "images/" + fb.slice(7);
+        }
+        return fb;
+    }
+
+    // 5. State-based default image (Each state gets its own dedicated photo)
+    const stateClean = clean(item?.state || fallback?.state);
+    if (stateClean && STATE_DEFAULT_IMAGES[stateClean]) {
+        return STATE_DEFAULT_IMAGES[stateClean];
+    }
+
+    // 6. Category-based fallback
+    const catClean = clean(item?.category || fallback?.category);
+    if (catClean.includes("nature")) return "images/kerala.jpg";
+    if (catClean.includes("adventure")) return "images/spiti.jpg";
+    if (catClean.includes("spirit") || catClean.includes("relig")) return "images/kedarnath.jpg";
+
+    return "images/tajmahal.jpg";
+}
+
+// In-memory data store initialized with all 24 places
 let places = [...INITIAL_PLACES];
 
 // Retrieve cached places from localStorage if exists
@@ -462,7 +704,11 @@ try {
     if (cached) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed) && parsed.length > 0) {
-            places = parsed;
+            // Re-apply image map to cached data to fix any stale bad images
+            places = parsed.map(item => {
+                const fallback = INITIAL_PLACES.find(p => p.name === item.name || p.title === item.title) || {};
+                return { ...item, image: getPlaceImage(item, fallback) };
+            });
         }
     }
 } catch (e) {
@@ -482,11 +728,18 @@ function syncBackendData(callback) {
             if (Array.isArray(liveData) && liveData.length > 0) {
                 // Merge with default ratings/reviews if missing
                 const enriched = liveData.map(item => {
-                    const fallback = INITIAL_PLACES.find(p => p.name === item.name) || {};
+                    const fallback = INITIAL_PLACES.find(p => 
+                        p.name === item.name || 
+                        (p._id && item._id && p._id === item._id) ||
+                        (p.title && item.title && p.title.toLowerCase() === item.title.toLowerCase())
+                    ) || {};
+
                     const isLongTime = (item.bestTime || "").length > 32;
                     return {
                         ...fallback,
                         ...item,
+                        // Always resolve image via map — fixes Vercel same-image bug
+                        image: getPlaceImage(item, fallback),
                         description: (item.description && item.description.length > 20) ? item.description : (isLongTime ? item.bestTime : fallback.description),
                         bestTime: !isLongTime && item.bestTime ? item.bestTime : (fallback.bestTime || "October to March"),
                         rating: item.rating || fallback.rating || 4.95,
@@ -506,4 +759,4 @@ function syncBackendData(callback) {
         .catch(err => {
             console.log("Using cached elite portfolio (offline resilient mode):", err.message);
         });
-}
+}

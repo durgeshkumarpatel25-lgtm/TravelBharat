@@ -47,10 +47,15 @@ function renderDestination(allData) {
 
     const searchKey = placeParam.toLowerCase().replace(/[^a-z0-9]/g, '');
     const place = allData.find(p => {
+        const pId = (p._id || "").toString().toLowerCase();
         const pName = (p.name || "").toLowerCase().replace(/[^a-z0-9]/g, '');
         const pTitle = (p.title || "").toLowerCase().replace(/[^a-z0-9]/g, '');
-        return pName === searchKey || pTitle === searchKey || pName.includes(searchKey);
-    }) || allData[0];
+        return pId === placeParam.toLowerCase() ||
+            pName === searchKey ||
+            pTitle === searchKey ||
+            (searchKey.length >= 4 && (pName.includes(searchKey) || searchKey.includes(pName))) ||
+            (searchKey.length >= 4 && (pTitle.includes(searchKey) || searchKey.includes(pTitle)));
+    }) || allData.find(p => p.name === "tajmahal") || allData[0];
 
     if (!place) {
         placeDetailsContainer.innerHTML = `
@@ -72,13 +77,14 @@ function renderDestination(allData) {
     const rawTime = place.bestTime || "";
     const bestTime = (rawTime.length > 0 && rawTime.length < 32) ? rawTime : "October to March";
     const desc = (place.description && place.description.length > 20) ? place.description : (rawTime.length > 32 ? rawTime : "Step into a realm where time stands still. This elite destination offers an unparalleled convergence of timeless heritage, royal architectural grace, and pristine natural serenity.");
+    const heroImage = (typeof getPlaceImage === 'function') ? getPlaceImage(place, {}) : (place.image || 'images/jaisalmer.jpg');
 
     // Filter related places
     const related = allData.filter(p => p.name !== place.name).slice(0, 3);
 
     placeDetailsContainer.innerHTML = `
         <!-- CINEMATIC HERO -->
-        <div class="cinematic-hero reveal active" style="background-image: url('${place.image || 'images/tajmahal.jpg'}');">
+        <div class="cinematic-hero reveal active" style="background-image: url('${heroImage}');">
             <div class="cinematic-hero-content">
                 <div class="cinematic-meta-row" style="margin-bottom: 1.2rem;">
                     <span class="gold-badge">${category}</span>
@@ -212,7 +218,7 @@ function renderDestination(allData) {
                     <div class="lux-card reveal active">
                         <div class="card-img-wrapper">
                             <span class="card-badge">${(r.category || 'Luxury').toUpperCase()}</span>
-                            <img src="${r.image || 'images/tajmahal.jpg'}" alt="${r.title}">
+                            <img src="${(typeof getPlaceImage === 'function') ? getPlaceImage(r, {}) : (r.image || 'images/tajmahal.jpg')}" alt="${r.title}">
                             <div class="card-season-pill"><span>🗓️</span> ${r.bestTime || 'Oct - Mar'}</div>
                         </div>
                         <div class="card-content">
@@ -302,7 +308,7 @@ startxref
     }
 };
 
-window.shareExpedition = function(title) {
+window.shareExpedition = function (title) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(window.location.href);
         alert(`✨ The link to "${title}" has been copied to your clipboard.`);
