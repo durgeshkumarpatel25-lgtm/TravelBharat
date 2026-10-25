@@ -157,51 +157,129 @@ function renderPlaces(data) {
     initReveal();
 }
 
+let currentStateRegion = "all";
+
 // 🔹 RENDER REGIONAL STATES (Photographic Luxury Cards)
 function renderStates(data) {
     if (!stateContainer) return;
 
-    // Aggregate unique states
-    const statesMap = {};
-    data.forEach(p => {
-        const raw = (p.state || "").trim();
-        const norm = raw.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-        if (!norm) return;
-        if (!statesMap[norm]) {
-            statesMap[norm] = {
-                rawState: raw,
-                normState: norm,
-                count: 0,
-                sampleImage: STATE_THUMBNAILS[raw.toLowerCase()] || p.image || "images/tajmahal.jpg"
-            };
+    // Use centralized STATES_DIRECTORY if available
+    const baseList = (typeof STATES_DIRECTORY !== "undefined" && Array.isArray(STATES_DIRECTORY))
+        ? STATES_DIRECTORY
+        : [];
+
+    // Calculate place counts from current data
+    const countsMap = {};
+    (data || []).forEach(p => {
+        const raw = (p.state || "").trim().toLowerCase();
+        const norm = raw.replace(/[^a-z0-9]/g, "");
+        if (norm) {
+            countsMap[norm] = (countsMap[norm] || 0) + 1;
         }
-        statesMap[norm].count++;
     });
 
-    const statesList = Object.values(statesMap);
-    if (statesList.length === 0) return;
+    // Prepare list of state cards
+    let displayList = [];
+    if (baseList.length > 0) {
+        displayList = baseList.map(st => {
+            const norm = st.id.toLowerCase().replace(/[^a-z0-9]/g, "");
+            return {
+                id: st.id,
+                name: st.name,
+                tagline: st.tagline,
+                subtitle: st.subtitle || st.famousFor || "Curated Sovereign Escapes",
+                icon: st.icon || "📍",
+                badge: st.badge || "Sovereign Region",
+                regionGroup: st.regionGroup || "heritage",
+                image: st.hero || "images/tajmahal.jpg",
+                count: countsMap[norm] || 1
+            };
+        });
+    } else {
+        // Fallback from raw data
+        const statesMap = {};
+        (data || []).forEach(p => {
+            const raw = (p.state || "").trim();
+            const norm = raw.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+            if (!norm) return;
+            if (!statesMap[norm]) {
+                statesMap[norm] = {
+                    id: norm,
+                    name: raw.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+                    subtitle: "Heritage & Culture",
+                    badge: "Sovereign Region",
+                    regionGroup: "heritage",
+                    image: (typeof STATE_THUMBNAILS !== "undefined" && STATE_THUMBNAILS[raw.toLowerCase()]) || p.image || "images/tajmahal.jpg",
+                    count: 0
+                };
+            }
+            statesMap[norm].count++;
+        });
+        displayList = Object.values(statesMap);
+    }
+
+    // Filter by Region Group
+    if (currentStateRegion !== "all") {
+        displayList = displayList.filter(st => st.regionGroup === currentStateRegion);
+    }
 
     stateContainer.innerHTML = "";
 
-    statesList.forEach(st => {
-        const display = st.rawState.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    if (displayList.length === 0) {
+        stateContainer.innerHTML = `
+            <div style="padding: 40px; text-align: center; color: var(--text-muted); width: 100%;">
+                No states found in this category.
+            </div>
+        `;
+        return;
+    }
 
+    displayList.forEach(st => {
         const card = document.createElement("a");
-        card.href = `state.html?state=${encodeURIComponent(st.normState)}&display=${encodeURIComponent(st.rawState)}`;
+        card.href = `state.html?state=${encodeURIComponent(st.id)}`;
         card.className = "state-card";
 
         card.innerHTML = `
-            <div class="state-card-bg" style="background-image: url('${st.sampleImage}')"></div>
+            <div class="state-card-bg" style="background-image: url('${st.image}')"></div>
             <div class="state-card-overlay"></div>
+            
+            <div class="state-card-top">
+                <span class="state-badge-pill">${st.badge}</span>
+                <span class="state-count-pill">${st.count} ${st.count === 1 ? 'Estate' : 'Estates'}</span>
+            </div>
+
             <div class="state-card-content">
-                <span class="state-count-pill">${st.count} Curated ${st.count === 1 ? 'Estate' : 'Estates'}</span>
-                <h3 class="state-name">${display}</h3>
-                <div class="state-arrow">Discover Region →</div>
+                <h3 class="state-name">${st.name}</h3>
+                <p class="state-subtitle">${st.subtitle}</p>
+                <div class="state-arrow">Explore Region →</div>
             </div>
         `;
 
         stateContainer.appendChild(card);
     });
+}
+
+// 🔹 FILTER STATES BY REGION
+function filterStateRegion(region, tabElem) {
+    currentStateRegion = region;
+
+    // Update active tab styling
+    const tabs = document.querySelectorAll(".state-tab");
+    tabs.forEach(t => t.classList.remove("active"));
+    if (tabElem) tabElem.classList.add("active");
+
+    renderStates(places);
+}
+
+// 🔹 SCROLL STATE STRIP HORIZONTALLY
+function scrollStateStrip(direction) {
+    if (!stateContainer) return;
+    const scrollAmount = 340;
+    if (direction === "left") {
+        stateContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    } else {
+        stateContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
 }
 
 // 🔹 DOCK SEARCH & FILTER ENGINE

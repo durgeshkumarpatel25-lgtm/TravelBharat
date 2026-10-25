@@ -1,7 +1,188 @@
 // ==========================================================================
-// TRAVELBHARAT ELITE - CURATED DATA STORE & SYNC ENGINE
-// Offline-first with live background sync to high-speed backend
+// 📍 MASTER REGIONAL STATES DIRECTORY (Extensible State Architecture)
+// To add a new state, simply add an entry here with your details!
 // ==========================================================================
+const STATES_DIRECTORY = [
+    {
+        id: "rajasthan",
+        name: "Rajasthan",
+        tagline: "The Sovereign Land of Kings",
+        subtitle: "Desert Palaces & Fortresses",
+        icon: "👑",
+        regionGroup: "heritage",
+        capital: "Jaipur",
+        bestSeason: "October to March",
+        famousFor: "Hill Forts, Desert Safaris & Royal Palaces",
+        hero: "images/jaisalmer.jpg",
+        badge: "Royal Heritage",
+        desc: "A golden tapestry of Thar Desert sands, invincible hilltop fortresses, and opulent Maharaja palaces celebrating timeless chivalry and artistry."
+    },
+    {
+        id: "kerala",
+        name: "Kerala",
+        tagline: "God's Own Emerald Coast",
+        subtitle: "Serene Backwaters & Ayurveda",
+        icon: "🌴",
+        regionGroup: "coastal",
+        capital: "Thiruvananthapuram",
+        bestSeason: "September to March",
+        famousFor: "Luxury Houseboats, Spice Hills & Ayurvedic Spas",
+        hero: "images/kerala.jpg",
+        badge: "Tropical Wellness",
+        desc: "A tropical coastal haven of emerald palm-lined backwaters, misty Cardamom hills, and authentic Ayurvedic wellness sanctuaries."
+    },
+    {
+        id: "goa",
+        name: "Goa",
+        tagline: "The Azure Portuguese Riviera",
+        subtitle: "Golden Beaches & Heritage Villas",
+        icon: "🏖️",
+        regionGroup: "coastal",
+        capital: "Panaji",
+        bestSeason: "November to February",
+        famousFor: "Arabian Sea Shores, Private Yachts & Portuguese Heritage",
+        hero: "images/goa.jpg",
+        badge: "Coastal Riviera",
+        desc: "Endless golden beaches, private yacht charters, sun-kissed spice plantations, and historic Baroque churches along the Arabian Sea."
+    },
+    {
+        id: "himachal pradesh",
+        name: "Himachal Pradesh",
+        tagline: "Abode of Snow & Cedar",
+        subtitle: "Alpine Passes & Pine Valleys",
+        icon: "🏔️",
+        regionGroup: "himalayan",
+        capital: "Shimla",
+        bestSeason: "October to June",
+        famousFor: "Spiti Valleys, High Passes & Ancient Monasteries",
+        hero: "images/spiti.jpg",
+        badge: "Alpine Sanctuary",
+        desc: "Majestic alpine summits, high mountain passes, ancient wooden temples, and peaceful monasteries nestled in towering pine valleys."
+    },
+    {
+        id: "madhya pradesh",
+        name: "Madhya Pradesh",
+        tagline: "Heart of Incredible India",
+        subtitle: "Wild Tiger Safaris & UNESCO Temples",
+        icon: "🐅",
+        regionGroup: "nature",
+        capital: "Bhopal",
+        bestSeason: "October to April",
+        famousFor: "Bengal Tigers in Kanha, Khajuraho Sculptures & Satpura Hills",
+        hero: "images/kanha.jpg",
+        badge: "Wildlife & Heritage",
+        desc: "Dense teak jungles where Bengal tigers roam free, UNESCO Khajuraho temples, and serene hilltop sanctuaries steeped in tribal folklore."
+    },
+    {
+        id: "uttar pradesh",
+        name: "Uttar Pradesh",
+        tagline: "The Cradle of Civilization",
+        subtitle: "Taj Mahal & Sacred Ganga",
+        icon: "🕌",
+        regionGroup: "spiritual",
+        capital: "Lucknow",
+        bestSeason: "October to March",
+        famousFor: "The Taj Mahal in Agra, Varanasi Dawn Ghats & Awadhi Splendor",
+        hero: "images/tajmahal.jpg",
+        badge: "Ancient Sanctum",
+        desc: "The sacred soul of Bharat, home to the eternal dawn ghats of Varanasi and the immortal white marble wonder of the Taj Mahal in Agra."
+    },
+    {
+        id: "uttarakhand",
+        name: "Uttarakhand",
+        tagline: "Devbhumi The Land of Gods",
+        subtitle: "Holy Shrines & Yoga Capital",
+        icon: "🕉️",
+        regionGroup: "himalayan",
+        capital: "Dehradun",
+        bestSeason: "May to October (Pilgrimage) / All year",
+        famousFor: "Kedarnath Temple, Rishikesh Yoga Capital & Char Dham",
+        hero: "images/kedarnath.jpg",
+        badge: "Spiritual Heights",
+        desc: "Sacred Himalayan heights, roaring sacred rivers, holy Char Dham pilgrimage sanctums, and the world's premier yoga retreats in Rishikesh."
+    },
+    {
+        id: "ladakh",
+        name: "Ladakh",
+        tagline: "The High-Altitude Moonland",
+        subtitle: "Sapphire Lakes & Buddhist Gompas",
+        icon: "❄️",
+        regionGroup: "himalayan",
+        capital: "Leh",
+        bestSeason: "May to September",
+        famousFor: "Pangong Lake, Khardung La Pass & High Gompas",
+        hero: "images/ladakh.jpg",
+        badge: "Celestial Frontier",
+        desc: "Snow-crowned passes, sapphire-blue high alpine lakes, centuries-old Buddhist gompas, and untamed celestial starlight skies."
+    },
+    {
+        id: "meghalaya",
+        name: "Meghalaya",
+        tagline: "The Abode of Clouds",
+        subtitle: "Living Root Bridges & Crystal Waters",
+        icon: "🌧️",
+        regionGroup: "nature",
+        capital: "Shillong",
+        bestSeason: "October to April",
+        famousFor: "Living Root Bridges, Umngot River Dawki & Cascades",
+        hero: "images/meghalaya.jpg",
+        badge: "Emerald Wilderness",
+        desc: "Living root bridges woven over centuries, crystal-clear emerald rivers at Dawki, and dramatic mist-draped waterfalls plunging into deep gorges."
+    },
+    {
+        id: "jammu & kashmir",
+        name: "Jammu & Kashmir",
+        tagline: "Paradise on Earth",
+        subtitle: "Sacred Trikuta Peaks & Meadows",
+        icon: "⛰️",
+        regionGroup: "spiritual",
+        capital: "Srinagar / Jammu",
+        bestSeason: "March to October",
+        famousFor: "Vaishno Devi Holy Shrine, Alpine Valleys & Snow Summits",
+        hero: "images/vaishnodevi.jpg",
+        badge: "Mountain Sanctum",
+        desc: "The revered mountain sanctum of Vaishno Devi, alpine meadows, and timeless spiritual devotion amidst the sacred Trikuta peaks."
+    },
+    {
+        id: "odisha",
+        name: "Odisha",
+        tagline: "Sacred Sands & Ocean Heritage",
+        subtitle: "Jagannath Temple & Golden Coast",
+        icon: "🌊",
+        regionGroup: "spiritual",
+        capital: "Bhubaneswar",
+        bestSeason: "October to February",
+        famousFor: "Puri Jagannath Shrine, Golden Sunrise Beaches & Sand Art",
+        hero: "images/puri.jpg",
+        badge: "Oceanic Devotion",
+        desc: "Golden sunrise shores on the Bay of Bengal, the divine sanctum of Lord Jagannath, and world-renowned sand sculpture traditions."
+    },
+    {
+        id: "chhattisgarh",
+        name: "Chhattisgarh",
+        tagline: "The Tribal Heartland",
+        subtitle: "Untouched Nature & Gravity Wonders",
+        icon: "🌿",
+        regionGroup: "nature",
+        capital: "Raipur",
+        bestSeason: "July to February",
+        famousFor: "Ulta Pani Magnetic Stream, Mainpat Hills & Dense Forests",
+        hero: "images/ulta pani.jpg",
+        badge: "Hidden Wonders",
+        desc: "Ancient untouched forests, gravity-defying streams at Mainpat, cascading jungle waterfalls, and deep prehistoric rock art traditions."
+    }
+];
+
+function getStateConfig(stateKey) {
+    if (!stateKey) return null;
+    const cleanKey = stateKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return STATES_DIRECTORY.find(st => {
+        const norm = st.id.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const normName = st.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return norm === cleanKey || norm.includes(cleanKey) || cleanKey.includes(norm) ||
+               normName === cleanKey || normName.includes(cleanKey);
+    }) || null;
+}
 
 const INITIAL_PLACES = [
     {

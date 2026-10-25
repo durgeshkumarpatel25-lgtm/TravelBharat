@@ -177,17 +177,42 @@
 </section>
 
 <!-- STATES STRIP & DISCOVERY -->
-<section id="states" style="background: var(--bg-void);">
-    <div class="section-header reveal">
+<section id="states" style="background: var(--bg-void); position: relative;">
+    <div class="section-header reveal active">
         <span class="section-tag">Explore Regions</span>
         <h2 class="section-title">Voyage Across The States</h2>
         <p class="section-desc">From the regal desert palaces of Rajasthan to the celestial heights of Himachal, embark on regional journeys crafted with uncompromising distinction.</p>
     </div>
 
+    <!-- REGION FILTER BAR & CONTROLS -->
+    <div class="states-filter-bar reveal active">
+        <div class="state-filter-tabs" id="stateFilterTabs">
+            <button class="state-tab active" onclick="filterStateRegion('all', this)">✨ All States (12)</button>
+            <button class="state-tab" onclick="filterStateRegion('himalayan', this)">🏔️ Himalayan Peaks</button>
+            <button class="state-tab" onclick="filterStateRegion('heritage', this)">👑 Royal Heritage</button>
+            <button class="state-tab" onclick="filterStateRegion('coastal', this)">🌴 Coastal & Backwaters</button>
+            <button class="state-tab" onclick="filterStateRegion('spiritual', this)">🕉️ Spiritual Sanctuaries</button>
+            <button class="state-tab" onclick="filterStateRegion('nature', this)">🐅 Wildlife & Wilderness</button>
+        </div>
+        <div class="state-carousel-controls">
+            <button class="state-arrow-btn" onclick="scrollStateStrip('left')" title="Scroll Left" aria-label="Previous">←</button>
+            <button class="state-arrow-btn" onclick="scrollStateStrip('right')" title="Scroll Right" aria-label="Next">→</button>
+        </div>
+    </div>
+
+    <!-- HORIZONTAL CAROUSEL STRIP -->
     <div class="states-strip-wrapper">
         <div class="states-strip" id="homeStateContainer">
-            <!-- Dynamically populated states with photography cards -->
+            <!-- Dynamically populated states with photography cards via script.js -->
         </div>
+    </div>
+
+    <!-- DIRECTORY ACTION LINK -->
+    <div style="text-align: center; margin-top: 35px;" class="reveal active">
+        <a href="state.html?state=all" class="btn-outline" style="text-decoration: none; padding: 12px 28px; display: inline-flex; align-items: center; gap: 8px;">
+            <span>Browse Full Sovereign State Directory</span>
+            <span>→</span>
+        </a>
     </div>
 </section>
 

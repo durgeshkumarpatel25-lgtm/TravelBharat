@@ -1,154 +1,260 @@
 // ==========================================================================
-// TRAVELBHARAT ELITE - REGIONAL STATE CONTROLLER
+// TRAVELBHARAT ELITE - REGIONAL STATE CONTROLLER & INTERACTIVE SUITE
+// Clean, modular, and easy to extend with new states and features!
 // ==========================================================================
 
-const params = new URLSearchParams(window.location.search);
-const stateParam = params.get("state") ? params.get("state").trim() : null;
-const displayParam = params.get("display") ? params.get("display").trim() : null;
+// Global state tracking
+let activeStateId = "rajasthan"; // Default fallback
+let currentDataStore = (typeof places !== "undefined" && Array.isArray(places)) ? places : [];
 
+// DOM Element References
 const stateTitle = document.getElementById("stateTitle");
 const stateDesc = document.getElementById("stateDesc");
+const stateBadge = document.getElementById("stateBadge");
 const stateContainer = document.getElementById("stateContainer");
 const regionalHero = document.getElementById("regionalHero");
+const breadcrumbState = document.getElementById("breadcrumbState");
+const statePillsList = document.getElementById("statePillsList");
+const stateOverview = document.getElementById("stateOverview");
 
-const STATE_DETAILS = {
-    "rajasthan": {
-        title: "Rajasthan • The Sovereign Land of Kings",
-        desc: "A golden tapestry of Thar Desert sands, invincible hilltop fortresses, and opulent Maharaja palaces celebrating timeless chivalry and artistry.",
-        hero: "images/jaisalmer.jpg"
-    },
-    "kerala": {
-        title: "Kerala • God's Own Emerald Coast",
-        desc: "A tropical coastal haven of emerald palm-lined backwaters, misty Cardamom hills, and authentic Ayurvedic wellness sanctuaries.",
-        hero: "images/kerala.jpg"
-    },
-    "goa": {
-        title: "Goa • The Azure Portuguese Riviera",
-        desc: "Endless golden beaches, private yacht charters, sun-kissed spice plantations, and historic Baroque churches along the Arabian Sea.",
-        hero: "images/goa.jpg"
-    },
-    "himachal pradesh": {
-        title: "Himachal Pradesh • Abode of Snow & Cedar",
-        desc: "Majestic alpine summits, high mountain passes, ancient wooden temples, and peaceful monasteries nestled in towering pine valleys.",
-        hero: "images/spiti.jpg"
-    },
-    "madhya pradesh": {
-        title: "Madhya Pradesh • Heart of Incredible India",
-        desc: "Dense teak jungles where Bengal tigers roam free, UNESCO Khajuraho temples, and serene hilltop sanctuaries steeped in tribal folklore.",
-        hero: "images/kanha.jpg"
-    },
-    "uttar pradesh": {
-        title: "Uttar Pradesh • The Cradle of Civilization",
-        desc: "The sacred soul of Bharat, home to the eternal dawn ghats of Varanasi and the immortal white marble wonder of the Taj Mahal in Agra.",
-        hero: "images/tajmahal.jpg"
-    },
-    "uttarakhand": {
-        title: "Uttarakhand • Devbhumi The Land of Gods",
-        desc: "Sacred Himalayan heights, roaring sacred rivers, holy Char Dham pilgrimage sanctums, and the world's premier yoga retreats in Rishikesh.",
-        hero: "images/kedarnath.jpg"
-    },
-    "ladakh": {
-        title: "Ladakh • The High-Altitude Moonland",
-        desc: "Snow-crowned passes, sapphire-blue high alpine lakes, centuries-old Buddhist gompas, and untamed celestial starlight skies.",
-        hero: "images/ladakh.jpg"
-    },
-    "meghalaya": {
-        title: "Meghalaya • The Abode of Clouds",
-        desc: "Living root bridges woven over centuries, crystal-clear emerald rivers at Dawki, and dramatic mist-draped waterfalls plunging into deep gorges.",
-        hero: "images/meghalaya.jpg"
-    },
-    "jammu & kashmir": {
-        title: "Jammu & Kashmir • Paradise on Earth",
-        desc: "The revered mountain sanctum of Vaishno Devi, alpine meadows, and timeless spiritual devotion amidst the sacred Trikuta peaks.",
-        hero: "images/vaishnodevi.jpg"
-    },
-    "odisha": {
-        title: "Odisha • Sacred Sands & Architectural Grace",
-        desc: "Golden sunrise shores on the Bay of Bengal, the divine sanctum of Lord Jagannath, and world-renowned sand sculpture traditions.",
-        hero: "images/puri.jpg"
-    },
-    "chhattisgarh": {
-        title: "Chhattisgarh • The Tribal Heartland",
-        desc: "Ancient untouched forests, gravity-defying streams at Mainpat, cascading jungle waterfalls, and deep prehistoric rock art traditions.",
-        hero: "images/ulta pani.jpg"
-    }
-};
+// Fact Cards
+const factCapital = document.getElementById("factCapital");
+const factSeason = document.getElementById("factSeason");
+const factHighlights = document.getElementById("factHighlights");
+const factDestinations = document.getElementById("factDestinations");
 
+// Section titles
+const statePortfolioTitle = document.getElementById("statePortfolioTitle");
+const statePortfolioSubtitle = document.getElementById("statePortfolioSubtitle");
+const stateSectionTag = document.getElementById("stateSectionTag");
+
+// Concierge Banner
+const conciergeBannerTitle = document.getElementById("conciergeBannerTitle");
+const conciergeBannerDesc = document.getElementById("conciergeBannerDesc");
+const conciergeWhatsappBtn = document.getElementById("conciergeWhatsappBtn");
+const navVipBtn = document.getElementById("navVipBtn");
+
+// 🔹 INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
-    if (typeof places !== "undefined" && Array.isArray(places)) {
-        renderStatePage(places);
+    // 1. Determine Initial State from URL
+    const params = new URLSearchParams(window.location.search);
+    const rawParam = params.get("state") || params.get("display") || "";
+    
+    if (rawParam) {
+        const found = getStateConfig(rawParam);
+        if (found) {
+            activeStateId = found.id;
+        } else {
+            activeStateId = rawParam.toLowerCase().trim();
+        }
+    } else {
+        // If no parameter provided, default to Rajasthan or "all"
+        activeStateId = "rajasthan";
     }
 
-    syncBackendData((updatedPlaces) => {
-        renderStatePage(updatedPlaces);
+    // 2. Render State Switcher Pills
+    renderStatePills();
+
+    // 3. Initial Render
+    if (typeof places !== "undefined" && Array.isArray(places) && places.length > 0) {
+        currentDataStore = places;
+        selectState(activeStateId, false);
+    }
+
+    // 4. Background Sync with Live Backend (if configured)
+    if (typeof syncBackendData === "function") {
+        syncBackendData((updatedPlaces) => {
+            currentDataStore = updatedPlaces;
+            selectState(activeStateId, false);
+        });
+    }
+
+    // 5. Browser History Support (Back/Forward)
+    window.addEventListener("popstate", (e) => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const stateKey = urlParams.get("state") || "rajasthan";
+        selectState(stateKey, false);
     });
 });
 
-function renderStatePage(allData) {
-    if (!stateContainer) return;
+// 🔹 RENDER INTERACTIVE STATE PILLS
+function renderStatePills() {
+    if (!statePillsList || typeof STATES_DIRECTORY === "undefined") return;
 
-    let targetKey = "";
-    let displayName = "All Sovereign Regions";
+    statePillsList.innerHTML = "";
 
-    if (displayParam) {
-        displayName = displayParam;
-        targetKey = displayParam.toLowerCase().trim();
-    } else if (stateParam) {
-        displayName = stateParam;
-        targetKey = stateParam.toLowerCase().trim();
-    }
+    // "All Regions" Pill
+    const allPill = document.createElement("button");
+    allPill.className = `state-pill-btn ${activeStateId === "all" ? "active" : ""}`;
+    allPill.dataset.state = "all";
+    allPill.innerHTML = `<span>✨</span><span>All States</span>`;
+    allPill.onclick = () => selectState("all", true);
+    statePillsList.appendChild(allPill);
 
-    // Match with dictionary
-    let matchedDetail = null;
-    for (let key in STATE_DETAILS) {
-        if (targetKey.includes(key) || key.includes(targetKey)) {
-            matchedDetail = STATE_DETAILS[key];
-            break;
-        }
-    }
-
-    if (matchedDetail) {
-        if (stateTitle) stateTitle.innerText = matchedDetail.title;
-        if (stateDesc) stateDesc.innerText = matchedDetail.desc;
-        if (regionalHero && matchedDetail.hero) {
-            regionalHero.style.backgroundImage = `url('${matchedDetail.hero}')`;
-        }
-    } else if (targetKey) {
-        const capitalized = displayName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-        if (stateTitle) stateTitle.innerText = `${capitalized} • Sovereign Territory`;
-        if (stateDesc) stateDesc.innerText = `Explore handpicked luxury estates and private itineraries throughout ${capitalized}.`;
-    } else {
-        if (stateTitle) stateTitle.innerText = "All Sovereign Regions";
-        if (stateDesc) stateDesc.innerText = "Discover the diverse luxury and timeless heritage across every state of Incredible India.";
-    }
-
-    // Filter places
-    const filtered = !targetKey ? allData : allData.filter(p => {
-        const pState = (p.state || "").toLowerCase().replace(/[^a-z0-9]/g, '');
-        const cleanTarget = targetKey.replace(/[^a-z0-9]/g, '');
-        return pState === cleanTarget || pState.includes(cleanTarget) || cleanTarget.includes(pState);
+    // Individual State Pills
+    STATES_DIRECTORY.forEach(st => {
+        const pill = document.createElement("button");
+        const isActive = (st.id === activeStateId || st.name.toLowerCase() === activeStateId);
+        pill.className = `state-pill-btn ${isActive ? "active" : ""}`;
+        pill.dataset.state = st.id;
+        pill.innerHTML = `<span>${st.icon || "📍"}</span><span>${st.name}</span>`;
+        pill.onclick = () => selectState(st.id, true);
+        statePillsList.appendChild(pill);
     });
+}
+
+// 🔹 SWITCH & RENDER ACTIVE STATE
+function selectState(stateId, updateUrl = true) {
+    activeStateId = stateId.toLowerCase().trim();
+
+    // 1. Update active class on pills
+    if (statePillsList) {
+        const buttons = statePillsList.querySelectorAll(".state-pill-btn");
+        buttons.forEach(btn => {
+            const btnState = btn.dataset.state;
+            if (btnState === activeStateId) {
+                btn.classList.add("active");
+                // Scroll into view if needed
+                btn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            } else {
+                btn.classList.remove("active");
+            }
+        });
+    }
+
+    // 2. Fetch State Configuration
+    const stateConfig = (typeof getStateConfig === "function") ? getStateConfig(activeStateId) : null;
+
+    // 3. Filter Destinations
+    let filteredPlaces = [];
+    if (activeStateId === "all") {
+        filteredPlaces = currentDataStore;
+    } else {
+        const cleanTarget = activeStateId.replace(/[^a-z0-9]/g, '');
+        filteredPlaces = currentDataStore.filter(p => {
+            const pState = (p.state || "").toLowerCase().replace(/[^a-z0-9]/g, '');
+            return pState === cleanTarget || pState.includes(cleanTarget) || cleanTarget.includes(pState);
+        });
+    }
+
+    // 4. Update Hero & Metadata
+    if (activeStateId === "all") {
+        if (stateTitle) stateTitle.innerText = "All Sovereign Regions";
+        if (stateDesc) stateDesc.innerText = "Discover handpicked luxury estates, ancient heritage, and serene natural escapes across every state of Incredible India.";
+        if (stateBadge) stateBadge.innerText = "The Sovereign Federation of Bharat";
+        if (breadcrumbState) breadcrumbState.innerText = "All Regions";
+        if (regionalHero) {
+            regionalHero.style.backgroundImage = `url('images/jaisalmer.jpg')`;
+        }
+
+        // Facts
+        if (factCapital) factCapital.innerText = "28 States & Regions";
+        if (factSeason) factSeason.innerText = "Year-Round Escapes";
+        if (factHighlights) factHighlights.innerText = "Heritage, Coast, Peaks & Sanctuaries";
+        if (factDestinations) factDestinations.innerText = `${currentDataStore.length} Curated Escapes`;
+
+        // Section Title
+        if (statePortfolioTitle) statePortfolioTitle.innerText = "Complete Indian Heritage Portfolio";
+        if (statePortfolioSubtitle) statePortfolioSubtitle.innerText = "Curated private estates across the sovereign regions of Bharat.";
+        if (stateSectionTag) stateSectionTag.innerText = "National Directory";
+
+        // Concierge
+        if (conciergeBannerTitle) conciergeBannerTitle.innerText = "Curate Your Sovereign Multi-State Odyssey";
+        if (conciergeBannerDesc) conciergeBannerDesc.innerText = "Connect with our elite travel concierges for bespoke cross-state itineraries with private aviation and heritage palace stays.";
+        const defaultWa = `https://wa.me/917489771078?text=${encodeURIComponent("Hello TravelBharat! I wish to curate a bespoke luxury journey across India.")}`;
+        if (conciergeWhatsappBtn) conciergeWhatsappBtn.href = defaultWa;
+        if (navVipBtn) navVipBtn.href = defaultWa;
+
+    } else if (stateConfig) {
+        if (stateTitle) stateTitle.innerText = `${stateConfig.name} • ${stateConfig.tagline}`;
+        if (stateDesc) stateDesc.innerText = stateConfig.desc;
+        if (stateBadge) stateBadge.innerText = `${stateConfig.badge} • Sovereign Gateway`;
+        if (breadcrumbState) breadcrumbState.innerText = stateConfig.name;
+        if (regionalHero && stateConfig.hero) {
+            regionalHero.style.backgroundImage = `url('${stateConfig.hero}')`;
+        }
+
+        // Facts
+        if (factCapital) factCapital.innerText = stateConfig.capital;
+        if (factSeason) factSeason.innerText = stateConfig.bestSeason;
+        if (factHighlights) factHighlights.innerText = stateConfig.famousFor;
+        const countStr = `${filteredPlaces.length} Signature ${filteredPlaces.length === 1 ? 'Escape' : 'Escapes'}`;
+        if (factDestinations) factDestinations.innerText = countStr;
+
+        // Section Title
+        if (statePortfolioTitle) statePortfolioTitle.innerHTML = `Curated Escapes in <span style="background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${stateConfig.name}</span>`;
+        if (statePortfolioSubtitle) statePortfolioSubtitle.innerText = `Handpicked private sanctuaries and architectural wonders in ${stateConfig.name}.`;
+        if (stateSectionTag) stateSectionTag.innerText = `${stateConfig.name} Portfolio`;
+
+        // Concierge
+        if (conciergeBannerTitle) conciergeBannerTitle.innerText = `Curate Your Private ${stateConfig.name} Expedition`;
+        if (conciergeBannerDesc) conciergeBannerDesc.innerText = `Our royal historians and concierge desk organize private palace suites, sunrise fortress access, and chauffeured transit across ${stateConfig.name}.`;
+        const waMsg = `Hello TravelBharat! I would like to plan a bespoke VIP journey to ${stateConfig.name}.`;
+        const waLink = `https://wa.me/917489771078?text=${encodeURIComponent(waMsg)}`;
+        if (conciergeWhatsappBtn) conciergeWhatsappBtn.href = waLink;
+        if (navVipBtn) navVipBtn.href = waLink;
+
+    } else {
+        // Fallback for custom state query
+        const displayName = activeStateId.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        if (stateTitle) stateTitle.innerText = `${displayName} • Sovereign Territory`;
+        if (stateDesc) stateDesc.innerText = `Explore handpicked luxury estates and private itineraries throughout ${displayName}.`;
+        if (stateBadge) stateBadge.innerText = "Regional Gateway";
+        if (breadcrumbState) breadcrumbState.innerText = displayName;
+        if (regionalHero) regionalHero.style.backgroundImage = `url('images/tajmahal.jpg')`;
+
+        if (factCapital) factCapital.innerText = "Regional Gateway";
+        if (factSeason) factSeason.innerText = "October to March";
+        if (factHighlights) factHighlights.innerText = "Heritage & Nature";
+        if (factDestinations) factDestinations.innerText = `${filteredPlaces.length} Destinations`;
+
+        if (statePortfolioTitle) statePortfolioTitle.innerText = `Curated Escapes in ${displayName}`;
+        if (statePortfolioSubtitle) statePortfolioSubtitle.innerText = `Handpicked private sanctuaries in ${displayName}.`;
+    }
+
+    // 5. Render Destination Cards
+    renderDestinationCards(filteredPlaces);
+
+    // 6. Update URL in Browser Address Bar without reloading
+    if (updateUrl && window.history && window.history.pushState) {
+        const newUrl = (activeStateId === "all") 
+            ? `${window.location.pathname}`
+            : `${window.location.pathname}?state=${encodeURIComponent(activeStateId)}`;
+        window.history.pushState({ state: activeStateId }, "", newUrl);
+    }
+}
+
+// 🔹 RENDER LUXURY DESTINATION CARDS
+function renderDestinationCards(placesList) {
+    if (!stateContainer) return;
 
     stateContainer.innerHTML = "";
 
-    if (filtered.length === 0) {
+    if (!placesList || placesList.length === 0) {
         stateContainer.innerHTML = `
-            <div style="text-align: center; padding: 80px 20px; grid-column: 1 / -1; background: rgba(16, 25, 46, 0.4); border-radius: var(--radius-xl); border: 1px dashed var(--gold-border);">
+            <div style="text-align: center; padding: 70px 20px; grid-column: 1 / -1; background: rgba(16, 25, 46, 0.45); border-radius: var(--radius-xl); border: 1px dashed var(--gold-border);">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--text-pure); margin-bottom: 8px;">Private Curations In Progress</h3>
-                <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem;">Our historians are actively curating new sovereign estates in this region. Check back soon or contact your concierge.</p>
-                <a href="index.html#states" class="btn-gold">Explore Other Regions →</a>
+                <h3 style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--text-pure); margin-bottom: 10px;">Private Curations In Progress</h3>
+                <p style="color: var(--text-muted); max-width: 520px; margin: 0 auto 1.6rem; line-height: 1.7;">
+                    Our cultural historians are actively documenting new sovereign estates and private palace accesses for this state. Inquire directly or explore our other top regions.
+                </p>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="selectState('all', true)" class="btn-gold">View All 19 Escapes →</button>
+                    <button onclick="selectState('rajasthan', true)" class="btn-outline">Explore Rajasthan</button>
+                    <button onclick="selectState('kerala', true)" class="btn-outline">Explore Kerala</button>
+                </div>
             </div>
         `;
         return;
     }
 
-    filtered.forEach((place, index) => {
+    placesList.forEach((place, index) => {
         const title = (place.title || place.name || "").split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
         const stateStr = (place.state || "India").toUpperCase();
         const cityStr = place.city ? `${place.city}, ` : "";
         const category = (place.category || "Luxury").toUpperCase();
-        const rating = place.rating || 4.96;
+        const rating = place.rating || 4.95;
+        const reviews = place.reviews || 2400;
         const rawTime = place.bestTime || "";
         const bestTime = (rawTime.length > 0 && rawTime.length < 32) ? rawTime : "October to March";
 
@@ -161,6 +267,7 @@ function renderStatePage(allData) {
                 <span class="card-badge">${category}</span>
                 <img src="${place.image || 'images/default.jpg'}" 
                      alt="${title}"
+                     loading="lazy"
                      onerror="this.onerror=null; this.src='images/tajmahal.jpg';">
                 <div class="card-season-pill">
                     <span>🗓️</span> ${bestTime}
@@ -175,6 +282,7 @@ function renderStatePage(allData) {
                 <div class="card-footer">
                     <div class="card-rating">
                         <span>★</span> ${rating.toFixed(2)}
+                        <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 500;">(${reviews.toLocaleString()})</span>
                     </div>
                     <div class="card-btn-group">
                         <a href="place.html?name=${encodeURIComponent(place.name || '')}" class="card-link-btn">Explore Guide →</a>

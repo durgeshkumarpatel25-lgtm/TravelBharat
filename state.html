@@ -4,56 +4,280 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regional Portals | TravelBharat Elite</title>
-    <meta name="description" content="Discover regional sovereign itineraries across India's greatest states.">
+    <meta name="description" content="Discover regional sovereign itineraries and curated escapes across India's greatest states.">
     
+    <!-- Design System & Typography -->
     <link rel="stylesheet" href="style.css">
     <style>
+        /* State Page Specialized Modern Styles */
+        .state-breadcrumb {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 100px 7% 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .state-breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+        .state-breadcrumb a:hover {
+            color: var(--gold-primary);
+        }
+        .state-breadcrumb .separator {
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .state-breadcrumb .current {
+            color: var(--gold-primary);
+            font-weight: 700;
+        }
+
         .regional-hero {
-            min-height: 60vh;
+            min-height: 52vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             position: relative;
-            padding: 140px 7% 80px;
+            padding: 60px 7% 70px;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            background-repeat: no-repeat;
+            transition: background-image 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
         .regional-hero::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(5, 8, 17, 0.4) 0%, rgba(5, 8, 17, 0.85) 70%, var(--bg-void) 100%);
+            background: linear-gradient(180deg, rgba(5, 8, 17, 0.55) 0%, rgba(5, 8, 17, 0.88) 75%, var(--bg-void) 100%);
             z-index: 1;
         }
         .regional-hero-content {
             position: relative;
             z-index: 2;
-            max-width: 900px;
+            max-width: 950px;
+            margin: 0 auto;
         }
         .regional-title {
             font-family: var(--font-heading);
-            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-size: clamp(2.4rem, 5.5vw, 4.4rem);
             font-weight: 800;
             color: var(--text-pure);
-            line-height: 1.1;
-            margin-bottom: 1.2rem;
-            text-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            text-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
         }
         .regional-desc {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--text-secondary);
             line-height: 1.8;
-            max-width: 750px;
+            max-width: 780px;
             margin: 0 auto;
+        }
+
+        /* Interactive State Switcher Bar */
+        .state-switcher-section {
+            background: rgba(11, 17, 32, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--gold-border);
+            padding: 16px 7%;
+            position: sticky;
+            top: 76px;
+            z-index: 99;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .state-switcher-wrapper {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .state-switcher-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold-accent);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .state-pills-list {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 4px 2px;
+            scroll-behavior: smooth;
+            flex: 1;
+        }
+        .state-pills-list::-webkit-scrollbar {
+            display: none;
+        }
+        .state-pill-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-full);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-decoration: none;
+        }
+        .state-pill-btn:hover {
+            background: rgba(229, 184, 105, 0.12);
+            border-color: var(--gold-border);
+            color: var(--text-pure);
+            transform: translateY(-2px);
+        }
+        .state-pill-btn.active {
+            background: var(--gold-grad);
+            border-color: var(--gold-accent);
+            color: var(--bg-void);
+            font-weight: 700;
+            box-shadow: 0 4px 18px rgba(229, 184, 105, 0.35);
+        }
+
+        /* State Overview Strip */
+        .state-overview-container {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 40px 7% 20px;
+        }
+        .state-facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.2rem;
+        }
+        .state-fact-card {
+            background: linear-gradient(135deg, rgba(22, 34, 61, 0.5) 0%, rgba(11, 17, 32, 0.5) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.35s ease;
+        }
+        .state-fact-card:hover {
+            border-color: var(--gold-border);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        .state-fact-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+            flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(229, 184, 105, 0.12);
+            border: 1px solid var(--gold-border);
+            border-radius: var(--radius-sm);
+        }
+        .state-fact-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .state-fact-value {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text-pure);
+            line-height: 1.35;
+        }
+
+        /* Concierge State Banner */
+        .state-concierge-banner {
+            max-width: 1350px;
+            margin: 70px auto 40px;
+            padding: 0 7%;
+        }
+        .state-concierge-box {
+            background: linear-gradient(135deg, rgba(16, 25, 46, 0.85) 0%, rgba(11, 17, 32, 0.95) 100%);
+            border: 1px solid var(--gold-border);
+            border-radius: var(--radius-xl);
+            padding: 45px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            box-shadow: var(--shadow-lux), 0 0 50px rgba(229, 184, 105, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .state-concierge-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gold-grad);
+        }
+        .state-concierge-text h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--text-pure);
+            margin-bottom: 8px;
+        }
+        .state-concierge-text p {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            max-width: 650px;
+            line-height: 1.65;
+        }
+        .state-concierge-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 900px) {
+            .state-concierge-box {
+                flex-direction: column;
+                text-align: center;
+                padding: 35px 25px;
+            }
+            .state-concierge-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+            .state-concierge-actions a {
+                width: 100%;
+                justify-content: center;
+            }
+            .state-switcher-section {
+                top: 68px;
+                padding: 12px 5%;
+            }
         }
     </style>
 </head>
 <body style="background: var(--bg-void);">
 
-<!-- NAVBAR -->
+<!-- MASTER NAVBAR -->
 <header class="navbar scrolled" id="navbar">
     <a href="index.html#hero" class="logo-container">
         <div class="logo-crest">
@@ -75,33 +299,113 @@
 
     <div style="display: flex; align-items: center; gap: 15px;">
         <a href="index.html#states" class="btn-outline" style="text-decoration: none;">← All Regions</a>
-        <a href="https://wa.me/917489771078?text=Hello TravelBharat! I wish to inquire about regional itineraries." target="_blank" class="btn-gold" style="text-decoration: none;">
+        <a id="navVipBtn" href="https://wa.me/917489771078?text=Hello TravelBharat! I wish to inquire about regional itineraries." target="_blank" class="btn-gold" style="text-decoration: none;">
             <span>VIP Booking</span>
         </a>
     </div>
 </header>
 
+<!-- BREADCRUMB NAVIGATION -->
+<nav class="state-breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="separator">/</span>
+    <a href="index.html#states">States</a>
+    <span class="separator">/</span>
+    <span class="current" id="breadcrumbState">Regional Gateway</span>
+</nav>
+
 <!-- REGIONAL HERO -->
 <section class="regional-hero reveal active" id="regionalHero">
     <div class="regional-hero-content">
-        <span class="gold-badge" style="margin-bottom: 1.5rem;">Sovereign Regional Gateway</span>
+        <span class="gold-badge" id="stateBadge" style="margin-bottom: 1.2rem;">Sovereign Regional Gateway</span>
         <h1 class="regional-title" id="stateTitle">Regional Territory</h1>
         <p class="regional-desc" id="stateDesc">Embark on a voyage through the architectural, cultural, and spiritual heritage of this sovereign Indian region.</p>
     </div>
 </section>
 
+<!-- INTERACTIVE STATE SWITCHER BAR -->
+<div class="state-switcher-section">
+    <div class="state-switcher-wrapper">
+        <div class="state-switcher-label">
+            <span>🏛️</span>
+            <span>Switch Region:</span>
+        </div>
+        <div class="state-pills-list" id="statePillsList">
+            <!-- Populated dynamically via state.js -->
+        </div>
+    </div>
+</div>
+
+<!-- STATE QUICK OVERVIEW / HIGHLIGHTS -->
+<div class="state-overview-container" id="stateOverview">
+    <div class="state-facts-grid">
+        <div class="state-fact-card">
+            <div class="state-fact-icon">🏛️</div>
+            <div>
+                <div class="state-fact-label">Capital & Gateway</div>
+                <div class="state-fact-value" id="factCapital">Regional Hub</div>
+            </div>
+        </div>
+
+        <div class="state-fact-card">
+            <div class="state-fact-icon">🗓️</div>
+            <div>
+                <div class="state-fact-label">Prime Travel Season</div>
+                <div class="state-fact-value" id="factSeason">October to March</div>
+            </div>
+        </div>
+
+        <div class="state-fact-card">
+            <div class="state-fact-icon">✨</div>
+            <div>
+                <div class="state-fact-label">Renowned For</div>
+                <div class="state-fact-value" id="factHighlights">Heritage & Culture</div>
+            </div>
+        </div>
+
+        <div class="state-fact-card">
+            <div class="state-fact-icon">📍</div>
+            <div>
+                <div class="state-fact-label">Curated Estates</div>
+                <div class="state-fact-value" id="factDestinations">Signature Places</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- REGIONAL DESTINATIONS SECTION -->
-<section style="background: var(--bg-void); padding-top: 50px;">
-    <div class="section-header reveal active">
-        <span class="section-tag">Curated Estates & Escapes</span>
-        <h2 class="section-title">Regional Portfolio</h2>
-        <p class="section-desc">Handpicked destinations and private sanctuaries within this region.</p>
+<section style="background: var(--bg-void); padding-top: 40px; padding-bottom: 60px;">
+    <div class="section-header reveal active" style="margin-bottom: 3.5rem;">
+        <span class="section-tag" id="stateSectionTag">Regional Portfolio</span>
+        <h2 class="section-title" id="statePortfolioTitle">Curated Regional Escapes</h2>
+        <p class="section-desc" id="statePortfolioSubtitle">Handpicked destinations and private sanctuaries within this sovereign region.</p>
     </div>
 
+    <!-- DYNAMIC PLACES GRID -->
     <div class="grid-container" id="stateContainer">
         <!-- Rendered via state.js -->
     </div>
 </section>
+
+<!-- BESPOKE STATE CONCIERGE BANNER -->
+<div class="state-concierge-banner">
+    <div class="state-concierge-box">
+        <div class="state-concierge-text">
+            <span class="gold-badge" style="margin-bottom: 0.8rem;">Bespoke VIP Travel</span>
+            <h3 id="conciergeBannerTitle">Curate Your Sovereign Journey</h3>
+            <p id="conciergeBannerDesc">Our private concierges arrange royal palace suite bookings, private aviation transfers, and exclusive historian-led access throughout this state.</p>
+        </div>
+        <div class="state-concierge-actions">
+            <a href="https://wa.me/917489771078" id="conciergeWhatsappBtn" target="_blank" class="btn-gold" style="text-decoration: none;">
+                <span>Inquire via Concierge</span>
+                <span>→</span>
+            </a>
+            <a href="index.html#planner" class="btn-outline" style="text-decoration: none;">
+                <span>Custom Itinerary Planner</span>
+            </a>
+        </div>
+    </div>
+</div>
 
 <!-- FOOTER -->
 <footer class="main-footer" id="about">
@@ -163,8 +467,9 @@
     </svg>
 </a>
 
+<!-- Scripts -->
 <script src="config.js"></script>
-<script src="data.js?v=3"></script>
-<script src="state.js?v=3"></script>
+<script src="data.js?v=4"></script>
+<script src="state.js?v=4"></script>
 </body>
 </html>
