@@ -580,9 +580,10 @@ button {
     width: 100%;
 }
 
-.dock-select option {
-    background: var(--bg-surface-elevated);
-    color: var(--text-pure);
+.dock-select option,
+select option {
+    background: var(--bg-surface-elevated, #16223d);
+    color: var(--text-pure, #ffffff);
 }
 
 .dock-btn {
