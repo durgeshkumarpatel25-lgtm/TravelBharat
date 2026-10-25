@@ -269,8 +269,52 @@
                 justify-content: center;
             }
             .state-switcher-section {
-                top: 68px;
-                padding: 12px 5%;
+                top: 65px;
+                padding: 10px 4%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .state-facts-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+            }
+            .state-fact-card {
+                padding: 12px 10px !important;
+                gap: 8px !important;
+            }
+            .state-fact-icon {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 1.1rem !important;
+            }
+            .state-fact-label {
+                font-size: 0.6rem !important;
+            }
+            .state-fact-value {
+                font-size: 0.82rem !important;
+                line-height: 1.25 !important;
+            }
+            .regional-hero {
+                padding: 35px 5% 40px !important;
+                min-height: auto !important;
+            }
+            .regional-title {
+                font-size: 1.85rem !important;
+            }
+            .regional-desc {
+                font-size: 0.92rem !important;
+            }
+            .state-breadcrumb {
+                padding: 85px 5% 10px !important;
+                font-size: 0.78rem !important;
+            }
+            .navbar .btn-outline {
+                display: none !important;
+            }
+            .navbar .btn-gold {
+                padding: 8px 14px !important;
+                font-size: 0.72rem !important;
             }
         }
     </style>
@@ -289,7 +333,7 @@
         </div>
     </a>
 
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
         <li><a href="index.html#hero">Home</a></li>
         <li><a href="index.html#states" class="active">States</a></li>
         <li><a href="index.html#destinations">Destinations</a></li>
@@ -297,11 +341,12 @@
         <li><a href="index.html#about">About</a></li>
     </ul>
 
-    <div style="display: flex; align-items: center; gap: 15px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
         <a href="index.html#states" class="btn-outline" style="text-decoration: none;">← All Regions</a>
         <a id="navVipBtn" href="https://wa.me/917489771078?text=Hello TravelBharat! I wish to inquire about regional itineraries." target="_blank" class="btn-gold" style="text-decoration: none;">
             <span>VIP Booking</span>
         </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
     </div>
 </header>
 

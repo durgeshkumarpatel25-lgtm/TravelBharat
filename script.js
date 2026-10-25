@@ -70,6 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
         menuToggle.addEventListener("click", () => {
             navLinks.classList.toggle("open");
         });
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("open");
+            });
+        });
     }
 
     // 5. Scroll Reveals

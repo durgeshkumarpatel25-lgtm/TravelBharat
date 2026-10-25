@@ -75,6 +75,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const stateKey = urlParams.get("state") || "rajasthan";
         selectState(stateKey, false);
     });
+
+    // 6. Mobile Menu Toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("open");
+        });
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("open");
+            });
+        });
+    }
 });
 
 // 🔹 RENDER INTERACTIVE STATE PILLS

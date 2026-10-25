@@ -80,9 +80,23 @@
             .admin-layout {
                 grid-template-columns: 1fr;
                 margin-top: 100px;
+                gap: 2rem;
             }
             .admin-preview-panel {
                 position: static;
+            }
+        }
+        @media (max-width: 600px) {
+            .admin-layout {
+                padding: 0 3%;
+                margin-top: 85px;
+            }
+            .admin-form-panel {
+                padding: 24px 18px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
             }
         }
     </style>
