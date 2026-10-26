@@ -13,7 +13,7 @@
     --bg-surface-elevated: #16223d;
     --bg-surface-glass: rgba(16, 25, 46, 0.72);
     --bg-light-glass: rgba(255, 255, 255, 0.04);
-    
+
     /* Imperial Gold Gradient Suite */
     --gold-primary: #f5d089;
     --gold-deep: #d4a359;
@@ -62,7 +62,9 @@
    GLOBAL RESET & BASE ARCHITECTURE
    ========================================================================== */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -77,7 +79,7 @@ html {
 
 body {
     background-color: var(--bg-void);
-    background-image: 
+    background-image:
         radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
         radial-gradient(ellipse 60% 40% at 90% 20%, rgba(229, 184, 105, 0.08), transparent),
         radial-gradient(ellipse 50% 50% at 10% 60%, rgba(16, 185, 129, 0.06), transparent),
@@ -410,7 +412,7 @@ button {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: 
+    background:
         linear-gradient(180deg, rgba(5, 8, 17, 0.4) 0%, rgba(5, 8, 17, 0.85) 70%, var(--bg-void) 100%),
         radial-gradient(circle at 50% 30%, rgba(229, 184, 105, 0.12) 0%, transparent 60%),
         url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=85&w=2100') center/cover no-repeat;
@@ -419,8 +421,13 @@ button {
 }
 
 @keyframes subtleZoom {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.08); }
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.08);
+    }
 }
 
 /* Ambient Glow Orbs */
@@ -452,8 +459,15 @@ button {
 }
 
 @keyframes orbPulse {
-    0% { transform: scale(0.9) translate(0, 0); opacity: 0.3; }
-    100% { transform: scale(1.15) translate(30px, -20px); opacity: 0.55; }
+    0% {
+        transform: scale(0.9) translate(0, 0);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: scale(1.15) translate(30px, -20px);
+        opacity: 0.55;
+    }
 }
 
 .hero-content {
@@ -661,8 +675,13 @@ select option {
 }
 
 @keyframes spinSlow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .seal-text {
@@ -1126,6 +1145,7 @@ section {
     .strip-nav-btn {
         display: none;
     }
+
     .state-card {
         flex: 0 0 240px;
         height: 330px;
@@ -1420,7 +1440,7 @@ section {
    ========================================================================== */
 
 .planner-section {
-    background: 
+    background:
         radial-gradient(ellipse 70% 50% at 50% 0%, rgba(229, 184, 105, 0.08), transparent),
         radial-gradient(circle at 10% 90%, rgba(99, 102, 241, 0.1), transparent 50%),
         var(--bg-deep);
@@ -2010,8 +2030,15 @@ section {
 }
 
 @keyframes ripple {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(1.4); opacity: 0; }
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
 }
 
 .whatsapp-float:hover {
@@ -2066,6 +2093,7 @@ section {
         opacity: 0;
         transform: translateY(35px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -2091,37 +2119,46 @@ section {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .footer-grid {
         grid-template-columns: 1.5fr 1fr 1fr;
     }
+
     .footer-newsletter-col {
         grid-column: 1 / -1;
     }
 }
 
 @media (max-width: 992px) {
+
     .planner-grid,
     .details-layout {
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
+
     .testimonials-grid {
         grid-template-columns: 1fr;
     }
+
     .concierge-dock {
         flex-direction: column;
         border-radius: var(--radius-lg);
         padding: 16px;
     }
+
     .dock-field {
         width: 100%;
     }
+
     .dock-btn {
         width: 100%;
     }
+
     .nav-links {
         display: none;
     }
+
     .nav-links.open {
         display: flex;
         flex-direction: column;
@@ -2140,12 +2177,14 @@ section {
         gap: 18px;
         overflow-y: auto;
     }
+
     .nav-links.open li a {
         font-size: 1.25rem;
         display: block;
         padding: 10px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
+
     .menu-toggle {
         display: flex;
         align-items: center;
@@ -2160,6 +2199,7 @@ section {
         cursor: pointer;
         transition: all 0.25s ease;
     }
+
     .menu-toggle:hover {
         background: var(--gold-grad);
         color: var(--bg-void);
@@ -2170,39 +2210,47 @@ section {
     section {
         padding: 60px 5%;
     }
+
     .hero {
         padding: 110px 5% 50px;
         min-height: auto;
     }
+
     .hero h1 {
         font-size: clamp(2.2rem, 8vw, 3.6rem);
         line-height: 1.15;
     }
+
     .hero-subtitle {
         font-size: 0.98rem;
         line-height: 1.6;
         margin-bottom: 1.8rem;
     }
+
     .gold-badge {
         font-size: 0.72rem;
         padding: 6px 14px;
     }
+
     .grid-container {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
+
     /* Stats 2x2 grid on tablet & mobile */
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
     }
+
     .stat-card {
         padding: 22px 15px;
     }
+
     .stat-number {
         font-size: 2.2rem;
     }
+
     .stat-label {
         font-size: 0.72rem;
         letter-spacing: 1px;
@@ -2215,6 +2263,7 @@ section {
         gap: 15px;
         margin-bottom: 2rem;
     }
+
     .lux-filters {
         width: 100%;
         overflow-x: auto;
@@ -2223,9 +2272,11 @@ section {
         -webkit-overflow-scrolling: touch;
         padding-bottom: 6px;
     }
+
     .lux-filters::-webkit-scrollbar {
         display: none;
     }
+
     .filter-tab {
         padding: 8px 16px;
         font-size: 0.8rem;
@@ -2236,28 +2287,35 @@ section {
     .lux-card {
         border-radius: var(--radius-md);
     }
+
     .card-img-wrapper {
         height: 220px;
     }
+
     .card-content {
         padding: 20px;
     }
+
     .card-title {
         font-size: 1.35rem;
     }
+
     .card-description {
         font-size: 0.88rem;
         -webkit-line-clamp: 3;
     }
+
     .card-footer {
         flex-wrap: wrap;
         gap: 12px;
     }
+
     .card-btn-group {
         width: 100%;
         display: flex;
         gap: 8px;
     }
+
     .card-quick-btn,
     .card-link-btn {
         flex: 1;
@@ -2271,18 +2329,22 @@ section {
     .states-filter-bar {
         margin-bottom: 16px;
     }
+
     .state-tab {
         padding: 7px 14px;
         font-size: 0.78rem;
     }
+
     .state-card {
         flex: 0 0 240px;
         height: 330px;
         padding: 18px;
     }
+
     .state-name {
         font-size: 1.35rem;
     }
+
     .state-subtitle {
         font-size: 0.8rem;
     }
@@ -2291,20 +2353,24 @@ section {
     .planner-container {
         padding: 20px 16px;
     }
+
     .planner-options-row {
         display: grid;
         grid-template-columns: 1fr;
         gap: 8px;
     }
+
     .planner-choice-btn {
         width: 100%;
         text-align: left;
         padding: 12px 14px;
         font-size: 0.85rem;
     }
+
     .planner-preview-card {
         padding: 22px 18px;
     }
+
     .preview-title {
         font-size: 1.3rem;
     }
@@ -2314,6 +2380,7 @@ section {
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
+
     .footer-bottom {
         flex-direction: column;
         gap: 15px;
@@ -2327,10 +2394,12 @@ section {
         width: 50px;
         height: 50px;
     }
+
     .whatsapp-float svg {
         width: 26px;
         height: 26px;
     }
+
     #backToTop {
         bottom: 20px;
         right: 18px;
@@ -2343,59 +2412,75 @@ section {
     .modal-backdrop {
         padding: 12px;
     }
+
     .modal-hero-img {
         height: 220px;
     }
+
     .modal-body {
         padding: 22px 18px;
     }
+
     .modal-body h2 {
         font-size: 1.6rem !important;
     }
 }
 
 @media (max-width: 480px) {
+
     /* Header on small smartphones */
     .navbar {
         padding: 12px 4%;
     }
+
     .logo-container {
         gap: 8px;
     }
+
     .logo-crest {
         width: 36px;
         height: 36px;
         font-size: 1.1rem;
     }
+
     .logo-text {
         font-size: 1.15rem;
     }
+
     .logo-tagline {
-        display: none; /* Hide tagline on phone screens so logo doesn't squeeze */
+        display: none;
+        /* Hide tagline on phone screens so logo doesn't squeeze */
     }
+
     .navbar .btn-gold {
         padding: 8px 14px;
         font-size: 0.72rem;
         letter-spacing: 0.5px;
     }
+
     .navbar .btn-outline {
-        display: none; /* In state.html / place.html, hide secondary outline button on small phone screens */
+        display: none;
+        /* In state.html / place.html, hide secondary outline button on small phone screens */
     }
 
     /* Hero */
     .hero {
         padding: 95px 4% 40px;
     }
+
     .hero h1 {
         font-size: 2.1rem;
     }
+
     .trending-chips {
         gap: 6px;
     }
+
     .chip-item {
         padding: 5px 10px;
         font-size: 0.75rem;
     }
+
     .seal-container {
         flex-direction: column;
         text-align: center;
@@ -2407,12 +2492,15 @@ section {
         grid-template-columns: 1fr 1fr;
         gap: 8px;
     }
+
     .stat-card {
         padding: 16px 10px;
     }
+
     .stat-number {
         font-size: 1.8rem;
     }
+
     .stat-label {
         font-size: 0.65rem;
     }
@@ -2422,19 +2510,23 @@ section {
         grid-template-columns: 1fr 1fr;
         gap: 8px;
     }
+
     .state-fact-card {
         padding: 12px 10px;
         gap: 10px;
     }
+
     .state-fact-icon {
         width: 34px;
         height: 34px;
         font-size: 1.2rem;
     }
+
     .state-fact-label {
         font-size: 0.62rem;
         letter-spacing: 1px;
     }
+
     .state-fact-value {
         font-size: 0.82rem;
     }
@@ -2444,9 +2536,11 @@ section {
         min-height: 38vh;
         padding: 35px 4% 40px;
     }
+
     .regional-title {
         font-size: 1.85rem;
     }
+
     .regional-desc {
         font-size: 0.92rem;
     }
@@ -2456,17 +2550,21 @@ section {
         top: 60px;
         padding: 10px 4%;
     }
+
     .state-switcher-label {
-        display: none; /* Hide label on phones to maximize pills swipe room */
+        display: none;
+        /* Hide label on phones to maximize pills swipe room */
     }
 
     /* State Concierge Banner */
     .state-concierge-box {
         padding: 24px 16px;
     }
+
     .state-concierge-text h3 {
         font-size: 1.35rem;
     }
+
     .state-concierge-text p {
         font-size: 0.88rem;
     }
@@ -2476,37 +2574,47 @@ section {
         min-height: 44vh;
         padding: 90px 4% 35px;
     }
+
     .cinematic-title {
         font-size: 1.9rem;
     }
+
     .info-card {
         padding: 22px 16px;
     }
+
     .sidebar-card {
         padding: 22px 16px;
     }
+
     .details-feature-grid {
         grid-template-columns: 1fr 1fr;
         gap: 10px;
     }
+
     .detail-feature-item {
         padding: 12px 10px;
     }
+
     .detail-feature-item h4 {
         font-size: 0.65rem;
     }
+
     .detail-feature-item p {
         font-size: 0.85rem;
     }
+
     .newsletter-box {
         flex-direction: column;
         border-radius: var(--radius-md);
         padding: 6px;
     }
+
     .newsletter-input {
         width: 100%;
         padding: 10px;
     }
+
     .newsletter-box button {
         width: 100%;
     }
@@ -2515,12 +2623,15 @@ section {
     .modal-hero-img {
         height: 180px;
     }
+
     .modal-body {
         padding: 16px 14px;
     }
+
     .modal-body h2 {
         font-size: 1.35rem !important;
     }
+
     .modal-close-btn {
         top: 10px;
         right: 10px;
@@ -2528,6 +2639,7 @@ section {
         height: 34px;
         font-size: 1rem;
     }
+
     .info-card div[style*="grid-template-columns: 1fr 1fr"] {
         grid-template-columns: 1fr !important;
         gap: 1rem;
